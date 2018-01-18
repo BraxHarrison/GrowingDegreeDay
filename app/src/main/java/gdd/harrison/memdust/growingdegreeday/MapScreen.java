@@ -37,6 +37,7 @@ public class MapScreen extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Context context;
+    private LocationInfo selectedLocation;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
 
@@ -205,6 +206,9 @@ public class MapScreen extends FragmentActivity implements OnMapReadyCallback {
         }
         Marker customMarker = mMap.addMarker(new MarkerOptions().position(latLng).title(addresses.get(0).getLocality() + " " + latLng.toString()));
         customMarker.showInfoWindow();
+        selectedLocation = new LocationInfo(addresses.get(0).getLocality());
+        LatLng nearestLocLatLong = new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude());
+        selectedLocation.setLatLong(nearestLocLatLong);
     }
 
 
