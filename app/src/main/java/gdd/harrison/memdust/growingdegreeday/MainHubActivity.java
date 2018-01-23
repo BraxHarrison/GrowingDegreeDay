@@ -3,7 +3,7 @@ package gdd.harrison.memdust.growingdegreeday;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HubScreenExperimental extends AppCompatActivity {
+public class MainHubActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
