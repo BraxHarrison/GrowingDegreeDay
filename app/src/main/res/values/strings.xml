@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">GrowingDegreeDay</string>
     <string name="title_activity_map_screen">Map</string>
+    <string name="title_activity_hub_screen">HubScreenActivity</string>
 </resources>
