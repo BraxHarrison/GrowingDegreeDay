@@ -7,4 +7,5 @@
     <string name="muncie_longitude">85.3864</string>
     <string name="muncie_latitude">40.1934</string>
     <string name="longitude_title">Longitude</string>
+    <string name="see_map">See Map</string>
 </resources>
