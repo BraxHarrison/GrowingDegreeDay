@@ -10,21 +10,25 @@ public class OnlineDataTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_data_test);
-        String currentGDDData = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetAllData=1&lat=40.116&long=-88.182";
-        String result;
         GDDDataParser parser = new GDDDataParser();
+        String dataToBeViewed = attemptToRetrieveDataInBackground(parser);
+        TextView dataView = findViewById(R.id.textView);
+        dataView.setText(dataToBeViewed);
+    }
 
+    protected String attemptToRetrieveDataInBackground(GDDDataParser parser){
+        String result = "";
+        String currentGDDData = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetAllData=1&lat=40.116&long=-88.182";
         try{
             result = parser.execute(currentGDDData).get();
-            TextView dataView = findViewById(R.id.textView);
-            dataView.setText(result);
         }
         catch(Exception e){
             System.out.println("There was an exception.");
         }
-
-
+        return result;
     }
+
+
 
 
 

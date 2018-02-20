@@ -8,18 +8,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class GDDDataParser extends AsyncTask<String, Void, String> {
-    public static final String REQUEST_METHOD = "GET";
-    public static final int READ_TIMEOUT = 15000;
-    public static final int CONNECTION_TIMEOUT = 15000;
+    private static final String REQUEST_METHOD = "GET";
+    private static final int READ_TIMEOUT = 15000;
+    private static final int CONNECTION_TIMEOUT = 15000;
 
     @Override
-    protected String doInBackground(String... params){
+    protected String doInBackground(String... params) {
         String stringUrl = params[0];
-        String result = "";
-        String inputLine;
 
-        try{
-            URL gddURL = new URL(stringUrl);
+        return attemptToBuildWebsite(stringUrl);
+    }
+
+    private String attemptToBuildWebsite(String stringURL) {
+        try {
+            URL gddURL = new URL(stringURL);
             HttpURLConnection connection = (HttpURLConnection) gddURL.openConnection();
             connection.setRequestMethod(REQUEST_METHOD);
             connection.setReadTimeout(READ_TIMEOUT);
@@ -28,15 +30,18 @@ public class GDDDataParser extends AsyncTask<String, Void, String> {
             InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
             BufferedReader reader = new BufferedReader(streamReader);
             StringBuilder stringBuilder = new StringBuilder();
-            while((inputLine = reader.readLine()) != null){
-                stringBuilder.append(inputLine);
-            }
-            reader.close();
-            streamReader.close();
-            result = stringBuilder.toString();
+            return readDataFromWebsite(reader, stringBuilder);
+        } catch (Exception e) {
+            System.out.println("There was an issue grabbing the data from the website.");
         }
-        catch(Exception e){
-            System.out.println("Something went wrong.");
+        return null;
+    }
+
+    private String readDataFromWebsite(BufferedReader reader, StringBuilder stringBuilder)throws Exception{
+        String inputLine;
+        String result = "";
+        while ((inputLine = reader.readLine()) != null){
+            result = stringBuilder.append(inputLine).toString();
         }
         return result;
     }
