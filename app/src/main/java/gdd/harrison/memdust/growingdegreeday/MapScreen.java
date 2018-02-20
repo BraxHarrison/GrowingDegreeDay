@@ -159,7 +159,7 @@ public class MapScreen extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        getLastLocation();
+//        getLastLocation();
         mMap = googleMap;
         InitMap();
 

@@ -34,6 +34,11 @@
             android:label="@string/title_activity_map_screen">
 
         </activity>
+        <activity
+            android:name=".GraphScreen"
+            android:label="@string/title_activity_graph_screen">
+
+        </activity>
         <activity android:name=".MainHubActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
