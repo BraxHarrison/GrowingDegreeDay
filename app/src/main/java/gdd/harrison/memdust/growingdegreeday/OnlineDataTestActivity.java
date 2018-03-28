@@ -11,15 +11,8 @@ public class OnlineDataTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_data_test);
         GDDDataOrganizer organizer = new GDDDataOrganizer();
-        String dataToBeViewed = organizer.beginRetrievingData();
+        String dataToBeViewed = organizer.beginRetrievingCurrentForecast();
         TextView dataView = findViewById(R.id.textView);
         dataView.setText(dataToBeViewed);
     }
-
-
-
-
-
-
-
 }

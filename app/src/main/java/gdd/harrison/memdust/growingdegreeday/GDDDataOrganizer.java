@@ -1,7 +1,5 @@
 package gdd.harrison.memdust.growingdegreeday;
 
-import com.google.android.gms.maps.model.LatLng;
-
 public class GDDDataOrganizer {
 
     private String latitude = "40.116";
@@ -13,36 +11,40 @@ public class GDDDataOrganizer {
     private GDDDataRetriever dataRetriever = new GDDDataRetriever();
 
 
-    public void setLatitude(String latitude){
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(String longitude){
-        this.longitude = longitude;
-    }
-
-    public void setCurrentYearGDDData(String currentYearGDDData){
-        this.currentYearGDDData = currentYearGDDData;
-    }
-
-    public void setCurrentYearMinTemp(String currentYearMinTemp){
-        this.currentYearMinTemp = currentYearMinTemp;
-    }
-
-    public void setAllYearsGDDAccumulations(String allYearsGDDAccumulations){
-        this.allYearsGDDAccumulations = allYearsGDDAccumulations;
-    }
-
-    public void setCurrentForecast(String currentForecast){
-        this.currentForecast = currentForecast;
-    }
-
     private String buildCurrentYearGDDDataURL(){
         return "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetCurrentData=1&lat=" + latitude +"&long=" +longitude;
     }
 
-    String beginRetrievingData(){
-        return attemptToRetrieveDataInBackground(buildCurrentYearGDDDataURL());
+    private String buildCurrentYearMinTempURL(){
+        return "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetMinimumCurrentData=1&lat=" + latitude +"&long=" +longitude;
+    }
+
+    private String buildGDDAccumulationsURL(){
+        return "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetAllData=1&lat=" + latitude +"&long=" +longitude;
+    }
+
+    private String buildCurrentForecastURL(){
+        return "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetForecastData=1&lat=" + latitude +"&long=" +longitude;
+    }
+
+    String beginRetrievingCurrentYearData(){
+        currentYearGDDData = attemptToRetrieveDataInBackground(buildCurrentYearGDDDataURL());
+        return currentYearGDDData;
+    }
+
+    String beginRetrievingCurrentYearMinData(){
+        currentYearMinTemp = attemptToRetrieveDataInBackground(buildCurrentYearMinTempURL());
+        return currentYearMinTemp;
+    }
+
+    String beginRetrievingAllData(){
+        allYearsGDDAccumulations = attemptToRetrieveDataInBackground(buildGDDAccumulationsURL());
+        return allYearsGDDAccumulations;
+    }
+
+    String beginRetrievingCurrentForecast(){
+        currentForecast = attemptToRetrieveDataInBackground(buildCurrentForecastURL());
+        return currentForecast;
     }
 
     private String attemptToRetrieveDataInBackground(String URL){
