@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GDDDataParser extends AsyncTask<String, Void, String> {
+public class GDDDataRetriever extends AsyncTask<String, Void, String> {
     private static final String REQUEST_METHOD = "GET";
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
@@ -16,10 +16,10 @@ public class GDDDataParser extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
         String stringUrl = params[0];
 
-        return attemptToBuildWebsite(stringUrl);
+        return attemptToRetrieveData(stringUrl);
     }
 
-    private String attemptToBuildWebsite(String stringURL) {
+    private String attemptToRetrieveData(String stringURL) {
         try {
             URL gddURL = new URL(stringURL);
             HttpURLConnection connection = (HttpURLConnection) gddURL.openConnection();

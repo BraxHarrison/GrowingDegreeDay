@@ -8,13 +8,17 @@ import android.widget.Button;
 
 public class MainHubActivity extends AppCompatActivity {
 
+    Button mapScreenSwitchButton;
+    Button graphScreenSwitchButton;
+    Button dataFetchingButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub_screen_experimental);
-        Button mapScreenSwitchButton = findViewById(R.id.mapButton);
-        Button graphScreenSwitchButton = findViewById(R.id.graphButton);
-        Button dataFetchingButton = findViewById(R.id.getLocation);
+        mapScreenSwitchButton = findViewById(R.id.mapButton);
+        graphScreenSwitchButton = findViewById(R.id.graphButton);
+        dataFetchingButton = findViewById(R.id.getLocation);
         listenForMapButtonClick(mapScreenSwitchButton);
         listenForGraphButtonClick(graphScreenSwitchButton);
         listenForDataFetchingClick(dataFetchingButton);
