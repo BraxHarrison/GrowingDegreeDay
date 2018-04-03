@@ -6,102 +6,107 @@
     android:layout_height="match_parent"
     tools:context="gdd.harrison.memdust.growingdegreeday.MainHubActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:textAlignment="center"
-        android:paddingTop="20sp"
-        android:paddingBottom="10sp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/latitude_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="@string/Latitude_Title"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10sp"
+            android:paddingTop="20sp"
+            android:textAlignment="center">
 
-        <TextView
-            android:id="@+id/latitude"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="@string/initial_latitude"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/latitude_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/Latitude_Title"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/longitude_title"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="@string/Longitude_title"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/latitude"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/initial_latitude"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/longitude"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="@string/muncie_longitude"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/longitude_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/Longitude_title"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/getLocation"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/mrccBlue"
-            android:text="@string/get_location_button"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/longitude"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/muncie_longitude"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/mapButton"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/mrccBlue"
-            android:text="@string/see_map"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/getLocation"
-            app:layout_constraintStart_toStartOf="@+id/getLocation"
-            app:layout_constraintTop_toBottomOf="@+id/getLocation" />
+            <Button
+                android:id="@+id/getLocation"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/mrccBlue"
+                android:text="@string/get_location_button"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/graphButton"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/mrccBlue"
-            android:text="@string/view_graph"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/mapButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/getLocation" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/mapButton"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/mrccBlue"
+                android:text="@string/see_map"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/getLocation"
+                app:layout_constraintStart_toStartOf="@+id/getLocation"
+                app:layout_constraintTop_toBottomOf="@+id/getLocation" />
+
+            <Button
+                android:id="@+id/graphButton"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/mrccBlue"
+                android:text="@string/view_graph"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/mapButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/getLocation" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </android.support.constraint.ConstraintLayout>
