@@ -7,16 +7,30 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GDDDataRetriever extends AsyncTask<String, Void, String> {
+public class GDDDataRetriever extends AsyncTask<String, Void, String[]> {
     private static final String REQUEST_METHOD = "GET";
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
+    private String[] URLParameters = new String[4];
+    private String[] retrievedData = new String[4];
 
     @Override
-    protected String doInBackground(String... params) {
-        String stringUrl = params[0];
+    protected String[] doInBackground(String... params) {
+        setAllURLParameters(params);
+        retrieveAllData();
+        return retrievedData;
+    }
 
-        return attemptToRetrieveData(stringUrl);
+    protected void setAllURLParameters(String[] parameter){
+        for (int i = 0; i < 4; i++){
+            URLParameters[i] = parameter[i];
+        }
+    }
+
+    protected void retrieveAllData(){
+        for (int i = 0; i < 4; i++){
+            retrievedData[i] = attemptToRetrieveData(URLParameters[i]);
+        }
     }
 
     private String attemptToRetrieveData(String stringURL) {
@@ -47,7 +61,7 @@ public class GDDDataRetriever extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String result){
+    protected void onPostExecute(String[] result){
         super.onPostExecute(result);
     }
 }

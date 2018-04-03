@@ -9,4 +9,8 @@
     <string name="muncie_latitude">40.1934</string>
     <string name="longitude_title">Longitude</string>
     <string name="see_map">See Map</string>
+    <string name="show_all_data_text">Show All data</string>
+    <string name="show_this_year_s_current_data">Show This Year\'s Current Data</string>
+    <string name="show_this_year_s_min_temperatures">Show this Year\'s Min Temperatures</string>
+    <string name="show_current_forecast">Show Current Forecast</string>
 </resources>
