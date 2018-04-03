@@ -2,9 +2,8 @@ package gdd.harrison.memdust.growingdegreeday;
 
 public class GDDDataOrganizer {
 
-    private String latitude = "40.116";
-    private String longitude = "-88.182";
-    private String[] data;
+    private String latitude;
+    private String longitude;
     private GDDDataRetriever dataRetriever = new GDDDataRetriever();
     private String[] URLs = new String[4];
 
@@ -19,6 +18,14 @@ public class GDDDataOrganizer {
     String[] beginRetrievingData(){
         buildURLs();
         return attemptToRetrieveDataInBackground();
+    }
+
+    public void setLatitude(String latitude){
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(String longitude){
+        this.longitude = longitude;
     }
 
     private String[] attemptToRetrieveDataInBackground(){

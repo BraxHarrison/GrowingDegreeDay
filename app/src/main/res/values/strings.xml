@@ -5,7 +5,7 @@
     <string name="title_activity_graph_screen">GraphScreen</string>
     <string name="get_location_button">Get Location</string>
     <string name="latitude_title">Latitude</string>
-    <string name="muncie_longitude">85.3864</string>
+    <string name="muncie_longitude">-85.3864</string>
     <string name="muncie_latitude">40.1934</string>
     <string name="longitude_title">Longitude</string>
     <string name="see_map">See Map</string>
