@@ -13,4 +13,8 @@
     <string name="show_this_year_s_current_data">Show This Year\'s Current Data</string>
     <string name="show_this_year_s_min_temperatures">Show this Year\'s Min Temperatures</string>
     <string name="show_current_forecast">Show Current Forecast</string>
+    <string name="Latitude_Title">Latitude:</string>
+    <string name="initial_latitude">40.116</string>
+    <string name="Longitude_title">Longitude:</string>
+    <string name="view_graph">View Graph</string>
 </resources>
