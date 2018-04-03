@@ -11,6 +11,7 @@ public class MainHubActivity extends AppCompatActivity {
     Button mapScreenSwitchButton;
     Button graphScreenSwitchButton;
     Button dataFetchingButton;
+    GDDDataOrganizer organizer = new GDDDataOrganizer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,8 @@ public class MainHubActivity extends AppCompatActivity {
         buttonListener.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                switchToDataViewingActivity();
+                String[] data = organizer.beginRetrievingData();
+                switchToDataViewingActivity(data);
             }
         });
     }
@@ -60,8 +62,9 @@ public class MainHubActivity extends AppCompatActivity {
         startActivity(graphActivitySwitchIntent);
     }
 
-    protected void switchToDataViewingActivity(){
-        Intent mapActivitySwitchIntent = new Intent(this, OnlineDataTestActivity.class);
-        startActivity(mapActivitySwitchIntent);
+    protected void switchToDataViewingActivity(String[] data){
+        Intent dataViewingActivityIntent = new Intent(this, OnlineDataTestActivity.class);
+        dataViewingActivityIntent.putExtra("dataStringArray", data);
+        startActivity(dataViewingActivityIntent);
     }
 }
