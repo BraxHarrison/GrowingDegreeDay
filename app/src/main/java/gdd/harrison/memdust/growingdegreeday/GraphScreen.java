@@ -23,14 +23,17 @@ public class GraphScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_screen);
         graph = findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
-            new DataPoint(0,2),
-            new DataPoint (1,5),
-                new DataPoint(2,6),
-                new DataPoint(3,3)
-        });
+        String dummyInfo = "12,1,121,124,23,2,4,11,93,3";
+
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dummyInfo));
         graph.addSeries(series);
-
-
+    }
+    public DataPoint[] parseData(String rawGDDData){
+        String[] splitStrings = rawGDDData.split(",");
+        DataPoint[] dataPoints = new DataPoint[splitStrings.length];
+        for(int i = 0; i<splitStrings.length;i++){
+            dataPoints[i] = new DataPoint(i,Integer.parseInt(splitStrings[i]));
+        }
+        return dataPoints;
     }
 }
