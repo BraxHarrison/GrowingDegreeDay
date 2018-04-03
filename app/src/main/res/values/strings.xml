@@ -5,8 +5,16 @@
     <string name="title_activity_graph_screen">GraphScreen</string>
     <string name="get_location_button">Get Location</string>
     <string name="latitude_title">Latitude</string>
-    <string name="muncie_longitude">85.3864</string>
+    <string name="muncie_longitude">-85.3864</string>
     <string name="muncie_latitude">40.1934</string>
     <string name="longitude_title">Longitude</string>
     <string name="see_map">See Map</string>
+    <string name="show_all_data_text">Show All data</string>
+    <string name="show_this_year_s_current_data">Show This Year\'s Current Data</string>
+    <string name="show_this_year_s_min_temperatures">Show this Year\'s Min Temperatures</string>
+    <string name="show_current_forecast">Show Current Forecast</string>
+    <string name="Latitude_Title">Latitude:</string>
+    <string name="initial_latitude">40.116</string>
+    <string name="Longitude_title">Longitude:</string>
+    <string name="view_graph">View Graph</string>
 </resources>

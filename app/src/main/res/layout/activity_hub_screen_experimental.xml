@@ -6,98 +6,107 @@
     android:layout_height="match_parent"
     tools:context="gdd.harrison.memdust.growingdegreeday.MainHubActivity">
 
-    <Button
-        android:id="@+id/getLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/get_location_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/LatitudeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/latitude_title"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/getLocation"
-        app:layout_constraintEnd_toStartOf="@+id/LongitudeTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10sp"
+            android:paddingTop="20sp"
+            android:textAlignment="center">
 
-    <TextView
-        android:id="@+id/LongitudeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="27dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/longitude_title"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/getLocation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.523"
-        android:layout_marginRight="100dp" />
+            <TextView
+                android:id="@+id/latitude_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/Latitude_Title"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/MuncieLatitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/muncie_latitude"
-        app:layout_constraintStart_toStartOf="@+id/LatitudeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/LatitudeTitle" />
+            <TextView
+                android:id="@+id/latitude"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/initial_latitude"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/muncie_longitude"
-        app:layout_constraintEnd_toEndOf="@+id/LongitudeTitle"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/LongitudeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/LongitudeTitle" />
+            <TextView
+                android:id="@+id/longitude_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/Longitude_title"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/mapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/see_map"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/getLocation"
-        app:layout_constraintStart_toStartOf="@+id/getLocation"
-        app:layout_constraintTop_toBottomOf="@+id/getLocation" />
+            <TextView
+                android:id="@+id/longitude"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/muncie_longitude"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/graphButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="View Graph"
-        app:layout_constraintBottom_toTopOf="@+id/mapButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getLocation" />
+            <Button
+                android:id="@+id/getLocation"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/mrccBlue"
+                android:text="@string/get_location_button"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/mapButton"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/mrccBlue"
+                android:text="@string/see_map"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/getLocation"
+                app:layout_constraintStart_toStartOf="@+id/getLocation"
+                app:layout_constraintTop_toBottomOf="@+id/getLocation" />
+
+            <Button
+                android:id="@+id/graphButton"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/mrccBlue"
+                android:text="@string/view_graph"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/mapButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/getLocation" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </android.support.constraint.ConstraintLayout>
