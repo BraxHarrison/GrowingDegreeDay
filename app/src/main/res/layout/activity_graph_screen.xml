@@ -5,10 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="gdd.harrison.memdust.growingdegreeday.GraphScreen">
-    <com.jjoe64.graphview.GraphView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dip"
-        android:id="@+id/graph"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph"
+            android:layout_width="match_parent"
+            android:layout_height="239dp" />
+
+        <Button
+            android:id="@+id/AllDataButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/cumulative_gdd_data" />
+
+        <Button
+            android:id="@+id/CurrentDataButton"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="@string/this_year_s_gdd_data" />
+
+        <Button
+            android:id="@+id/MinDataButton"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="@string/current_year_min_data" />
+
+        <Button
+            android:id="@+id/ForecastDataButton"
+            android:layout_width="match_parent"
+            android:layout_height="69dp"
+            android:text="@string/forecasted_data" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

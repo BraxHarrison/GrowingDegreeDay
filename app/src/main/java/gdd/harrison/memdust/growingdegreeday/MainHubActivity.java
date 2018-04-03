@@ -62,13 +62,18 @@ public class MainHubActivity extends AppCompatActivity {
         buttonListener.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                switchToGraphActivity();
+                organizer.setLatitude(latitude.getText().toString());
+                organizer.setLongitude(longitude.getText().toString());
+                String[] data = organizer.beginRetrievingData();
+                switchToDataViewingActivity(data);
+                switchToGraphActivity(data);
             }
         });
 
     }
-    protected void switchToGraphActivity(){
+    protected void switchToGraphActivity(String[] data){
         Intent graphActivitySwitchIntent = new Intent(this, GraphScreen.class );
+        graphActivitySwitchIntent.putExtra("dataStringArray",data);
         startActivity(graphActivitySwitchIntent);
     }
 
