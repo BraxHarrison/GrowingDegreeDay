@@ -1,6 +1,12 @@
 package gdd.harrison.memdust.growingdegreeday;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,13 +26,45 @@ public class MainHubActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub_screen_experimental);
+        setUpIds();
+        setLatitudeAndLongitude();
+        setUpListeners();
+    }
+
+    private double[] checkLocationData() {
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        double[] latlongPair = new double[2];
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return latlongPair;
+        }
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        latlongPair[0] = location.getLongitude();
+        latlongPair[1] = location.getLatitude();
+        return latlongPair;
+    }
+
+    protected void setLatitudeAndLongitude(){
+        organizer.setLatitude(latitude.getText().toString());
+        organizer.setLongitude(longitude.getText().toString());
+    }
+
+    protected void setUpIds(){
         mapScreenSwitchButton = findViewById(R.id.mapButton);
         graphScreenSwitchButton = findViewById(R.id.graphButton);
         dataFetchingButton = findViewById(R.id.getLocation);
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
-        organizer.setLatitude(latitude.getText().toString());
-        organizer.setLongitude(longitude.getText().toString());
+    }
+
+    protected void setUpListeners(){
         listenForMapButtonClick(mapScreenSwitchButton);
         listenForGraphButtonClick(graphScreenSwitchButton);
         listenForDataFetchingClick(dataFetchingButton);
@@ -45,12 +83,17 @@ public class MainHubActivity extends AppCompatActivity {
         buttonListener.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                organizer.setLatitude(latitude.getText().toString());
-                organizer.setLongitude(longitude.getText().toString());
-                String[] data = organizer.beginRetrievingData();
-                switchToDataViewingActivity(data);
+                double[] latlon = checkLocationData();
+                replacelatlonTextView(latlon);
             }
         });
+    }
+
+    protected void replacelatlonTextView(double[] latlong){
+        String latitude = Double.toString(latlong[1]);
+        String longitude = Double.toString(latlong[0]);
+        this.latitude.setText(latitude);
+        this.longitude.setText(longitude);
     }
 
     protected void switchToMapActivity(){
@@ -65,7 +108,6 @@ public class MainHubActivity extends AppCompatActivity {
                 organizer.setLatitude(latitude.getText().toString());
                 organizer.setLongitude(longitude.getText().toString());
                 String[] data = organizer.beginRetrievingData();
-                switchToDataViewingActivity(data);
                 switchToGraphActivity(data);
             }
         });
@@ -77,9 +119,4 @@ public class MainHubActivity extends AppCompatActivity {
         startActivity(graphActivitySwitchIntent);
     }
 
-    protected void switchToDataViewingActivity(String[] data){
-        Intent dataViewingActivityIntent = new Intent(this, OnlineDataTestActivity.class);
-        dataViewingActivityIntent.putExtra("dataStringArray", data);
-        startActivity(dataViewingActivityIntent);
-    }
 }

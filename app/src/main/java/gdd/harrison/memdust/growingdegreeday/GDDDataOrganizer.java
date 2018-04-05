@@ -1,11 +1,14 @@
 package gdd.harrison.memdust.growingdegreeday;
 
+import android.content.Context;
+
 public class GDDDataOrganizer {
 
     private String latitude;
     private String longitude;
     private GDDDataRetriever dataRetriever = new GDDDataRetriever();
     private String[] URLs = new String[4];
+    private Context mainHubContext;
 
     private void buildURLs(){
         URLs[0] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetCurrentData=1&lat=" + latitude +"&long=" +longitude;
@@ -14,6 +17,9 @@ public class GDDDataOrganizer {
         URLs[3] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetForecastData=1&lat=" + latitude +"&long=" +longitude;
     }
 
+    protected void setContext(Context context){
+        mainHubContext = context;
+    }
 
     String[] beginRetrievingData(){
         buildURLs();
