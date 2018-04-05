@@ -18,6 +18,7 @@ public class MainHubActivity extends AppCompatActivity {
     Button mapScreenSwitchButton;
     Button graphScreenSwitchButton;
     Button dataFetchingButton;
+    Button settingsButton;
     GDDDataOrganizer organizer = new GDDDataOrganizer();
     TextView latitude;
     TextView longitude;
@@ -62,12 +63,23 @@ public class MainHubActivity extends AppCompatActivity {
         dataFetchingButton = findViewById(R.id.getLocation);
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
+        settingsButton=findViewById(R.id.settingsButton);
     }
 
     protected void setUpListeners(){
         listenForMapButtonClick(mapScreenSwitchButton);
         listenForGraphButtonClick(graphScreenSwitchButton);
         listenForDataFetchingClick(dataFetchingButton);
+        listenForSettingsButtonClick();
+    }
+
+    protected void listenForSettingsButtonClick(){
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchToSettingsActivity();
+            }
+        });
     }
 
     protected void listenForMapButtonClick(Button buttonListener){
@@ -87,6 +99,11 @@ public class MainHubActivity extends AppCompatActivity {
                 replacelatlonTextView(latlon);
             }
         });
+    }
+
+    protected void switchToSettingsActivity(){
+        Intent settingActivitySwitchIntent = new Intent(this, SettingsScreenActivity.class);
+        startActivity(settingActivitySwitchIntent);
     }
 
     protected void replacelatlonTextView(double[] latlong){

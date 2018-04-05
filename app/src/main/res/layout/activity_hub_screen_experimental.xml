@@ -57,7 +57,7 @@
         <Button
             android:id="@+id/getLocation"
             android:layout_width="match_parent"
-            android:layout_height="62dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -73,7 +73,7 @@
         <Button
             android:id="@+id/mapButton"
             android:layout_width="match_parent"
-            android:layout_height="62dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -87,9 +87,17 @@
             app:layout_constraintTop_toBottomOf="@+id/getLocation" />
 
         <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mrccBlue"
+            android:text="@string/personal_settings_screen"
+            android:textColor="@color/white" />
+
+        <Button
             android:id="@+id/graphButton"
             android:layout_width="match_parent"
-            android:layout_height="62dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -101,6 +109,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/getLocation" />
+
     </LinearLayout>
 
 
