@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 public class MainHubActivity extends AppCompatActivity {
 
     Button mapScreenSwitchButton;
@@ -28,6 +30,12 @@ public class MainHubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub_screen_experimental);
         setUpIds();
+        setLatitudeAndLongitude();
+        setUpListeners();
+    }
+
+    protected void onStart(){
+        super.onStart();
         setLatitudeAndLongitude();
         setUpListeners();
     }
@@ -124,6 +132,8 @@ public class MainHubActivity extends AppCompatActivity {
             public void onClick(View view){
                 organizer.setLatitude(latitude.getText().toString());
                 organizer.setLongitude(longitude.getText().toString());
+                System.out.println(organizer.latitude);
+                System.out.println(organizer.longitude);
                 String[] data = organizer.beginRetrievingData();
                 switchToGraphActivity(data);
             }

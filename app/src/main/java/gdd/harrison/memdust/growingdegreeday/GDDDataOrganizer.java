@@ -2,9 +2,8 @@ package gdd.harrison.memdust.growingdegreeday;
 
 class GDDDataOrganizer {
 
-    private String latitude;
-    private String longitude;
-    private GDDDataRetriever dataRetriever = new GDDDataRetriever();
+    protected String latitude;
+    protected String longitude;
     private String[] URLs = new String[4];
 
     private void buildURLs(){
@@ -28,12 +27,13 @@ class GDDDataOrganizer {
     }
 
     private String[] attemptToRetrieveDataInBackground(){
+        GDDDataRetriever dataRetriever = new GDDDataRetriever();
         String[] result = new String[4];
         try{
             result = dataRetriever.execute(URLs[0], URLs[1], URLs[2], URLs[3]).get();
         }
         catch(Exception e){
-            System.out.println("There was an exception.");
+            System.out.println("There was an exception in trying to get the data asynchronously.");
         }
         return result;
     }

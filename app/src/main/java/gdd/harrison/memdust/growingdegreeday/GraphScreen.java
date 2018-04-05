@@ -27,18 +27,33 @@ public class GraphScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_screen);
+        createButtonIds();
+        listenToButtons();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
         Intent intent = getIntent();
         dataArray = intent.getStringArrayExtra("dataStringArray");
         graph = findViewById(R.id.graph);
-        currentButton = findViewById(R.id.CurrentDataButton);
-        listenForCurrentButton();
-        minTempButton = findViewById(R.id.MinDataButton);
-        listenForMinTempButton();
-        allDataButton = findViewById(R.id.AllDataButton);
-        listenForAllDataButton();
-        currentForecastButton = findViewById(R.id.ForecastDataButton);
-        listenForForecastButton();
         createLineSeries();
+    }
+
+
+    public void createButtonIds(){
+        currentButton = findViewById(R.id.CurrentDataButton);
+        minTempButton = findViewById(R.id.MinDataButton);
+        allDataButton = findViewById(R.id.AllDataButton);
+        currentForecastButton = findViewById(R.id.ForecastDataButton);
+    }
+
+    public void listenToButtons(){
+        listenForCurrentButton();
+        listenForMinTempButton();
+        listenForAllDataButton();
+        listenForForecastButton();
+
     }
 
     public void createLineSeries() {
