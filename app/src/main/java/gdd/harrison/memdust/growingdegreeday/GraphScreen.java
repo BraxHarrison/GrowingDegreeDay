@@ -8,6 +8,7 @@ import android.widget.Button;
 
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -20,8 +21,6 @@ public class GraphScreen extends AppCompatActivity {
     ArrayList<LineGraphSeries> allDataSeries = new ArrayList<>();
     Button currentButton;
     Button minTempButton;
-    Button allDataButton;
-    Button currentForecastButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +43,18 @@ public class GraphScreen extends AppCompatActivity {
     public void createButtonIds(){
         currentButton = findViewById(R.id.CurrentDataButton);
         minTempButton = findViewById(R.id.MinDataButton);
-        allDataButton = findViewById(R.id.AllDataButton);
-        currentForecastButton = findViewById(R.id.ForecastDataButton);
     }
 
     public void listenToButtons(){
         listenForCurrentButton();
         listenForMinTempButton();
-        listenForAllDataButton();
-        listenForForecastButton();
 
     }
 
     public void createLineSeries() {
         for (int i = 0; i < 4; i++) {
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dataArray[i]));
+            series.setTitle("Corn Growing Degree Day Tracker");
             allDataSeries.add(series);
         }
     }
@@ -77,6 +73,16 @@ public class GraphScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 graph.removeAllSeries();
+                graph.setTitle("Current Growing Degree Data and Projections");
+                GridLabelRenderer gridLabelRenderer = graph.getGridLabelRenderer();
+                gridLabelRenderer.setHorizontalAxisTitle("Days since January 1st");
+                gridLabelRenderer.setVerticalAxisTitle("Growing Degree Days");
+                graph.getViewport().setMinX(0);
+                graph.getViewport().setMinY(0);
+                graph.getViewport().setMaxX(365);
+                graph.getViewport().setMaxY(3000);
+                graph.getViewport().setYAxisBoundsManual(true);
+                graph.getViewport().setXAxisBoundsManual(true);
                 graph.addSeries(allDataSeries.get(0));
             }
         });
@@ -87,28 +93,17 @@ public class GraphScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 graph.removeAllSeries();
+                graph.setTitle("Minimum Temperature Measurements");
+                GridLabelRenderer gridLabelRenderer = graph.getGridLabelRenderer();
+                gridLabelRenderer.setHorizontalAxisTitle("Days since January 1st");
+                gridLabelRenderer.setVerticalAxisTitle("Minimum Temperature (°F)");
+                graph.getViewport().setMinX(0);
+                graph.getViewport().setMinY(-30);
+                graph.getViewport().setMaxX(365);
+                graph.getViewport().setMaxY(120);
                 graph.addSeries(allDataSeries.get(1));
             }
         });
     }
 
-    private void listenForAllDataButton(){
-        allDataButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                graph.removeAllSeries();
-                graph.addSeries(allDataSeries.get(2));
-            }
-        });
-    }
-
-    private void listenForForecastButton(){
-        currentForecastButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                graph.removeAllSeries();
-                graph.addSeries(allDataSeries.get(3));
-            }
-        });
-    }
 }
