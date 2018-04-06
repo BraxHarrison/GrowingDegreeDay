@@ -43,6 +43,7 @@
         </activity>
         <activity android:name=".GraphScreen" />
         <activity android:name=".OnlineDataTestActivity"></activity>
+        <activity android:name=".TableScreen"></activity>
         <activity android:name=".SettingsScreenActivity"></activity>
     </application>
 
