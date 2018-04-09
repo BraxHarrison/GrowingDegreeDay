@@ -13,10 +13,18 @@ class GDDDataCalculator {
         return (11.459*maturityValue) +100.27;
     }
 
-    ArrayList<Double> calculateTotalGDDAverage(String accumulatedData) {
-        String[] accumulatedDataIntoArray = accumulatedData.split(" ");
+    /*ArrayList<Double> calculateTotalMedians(String[] accumulatedData){
+        ArrayList<Double> medians = new ArrayList<>();
+        ArrayList<ArrayList<String>> listOfAllYears = organizeAccumulatedGDDs(accumulatedData);
+        for (int i = 0; i<listOfAllYears.get(0).size();i++){
+            Double[] listOfDoubles = new Double[listOfAllYears.size()];
+            for (int j = 0; j < listOfAllYears.size());
+        }
+    }*/
+
+    ArrayList<Double> calculateTotalGDDAverage(String[] accumulatedData) {
         ArrayList<Double> averages = new ArrayList<>();
-        ArrayList<ArrayList<String>> listOfAllYears = organizeAccumulatedGDDs(accumulatedDataIntoArray);
+        ArrayList<ArrayList<String>> listOfAllYears = organizeAccumulatedGDDs(accumulatedData);
         for (int j = 0; j < listOfAllYears.get(0).size() - 1; j++){
             double sumOfAllYearsOnSingleDay = 0;
             for (int i = 0; i < listOfAllYears.size(); i++){

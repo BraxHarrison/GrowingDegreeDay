@@ -39,7 +39,8 @@ class GDDDataOrganizer {
     }
 
     String getAccumulatedAverage(){
-        return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(fetchedData[2])));
+        String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
+        return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(accumulatedDataIntoArray)));
     }
 
     private String removeExcessCharacters(String unformattedString){
