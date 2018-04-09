@@ -34,8 +34,8 @@ class GDDDataOrganizer {
         return String.valueOf(calculator.calculateBlackLayer(maturityValue));
     }
 
-    private double getSilkLayer(){
-        return calculator.calculateSilkLayer(maturityValue);
+    String getSilkLayer(){
+        return String.valueOf(calculator.calculateSilkLayer(maturityValue));
     }
 
 

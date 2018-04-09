@@ -53,10 +53,15 @@ public class GraphScreen extends AppCompatActivity {
     }
 
     public void createLineSeries() {
-        for (int i = 0; i < 3; i++) {
-            if (i == 2){
+        for (int i = 0; i < 4; i++) {
+            if ((i == 2) || (i == 3)){
                 LineGraphSeries<DataPoint> horizontalLineSeries = new LineGraphSeries<>(createHorizontalLine(dataArray[i]));
-                horizontalLineSeries.setColor(Color.BLACK);
+                if (i == 2){
+                    horizontalLineSeries.setColor(Color.BLACK);
+                }
+                if (i == 3){
+                    horizontalLineSeries.setColor(Color.RED);
+                }
                 allDataSeries.add(horizontalLineSeries);
             }
             else {
@@ -101,6 +106,7 @@ public class GraphScreen extends AppCompatActivity {
                 graph.getViewport().setXAxisBoundsManual(true);
                 graph.addSeries(allDataSeries.get(0));
                 graph.addSeries(allDataSeries.get(2));
+                graph.addSeries(allDataSeries.get(3));
             }
         });
     }

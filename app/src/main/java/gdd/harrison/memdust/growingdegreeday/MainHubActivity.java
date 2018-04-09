@@ -136,6 +136,7 @@ public class MainHubActivity extends AppCompatActivity {
                 String[] data = organizer.beginRetrievingData();
                 addOnlySomePartsOfTheData(data);
                 dataForGraph[2] = organizer.getBlackLayer();
+                dataForGraph[3] = organizer.getSilkLayer();
                 switchToGraphActivity();
             }
         });
