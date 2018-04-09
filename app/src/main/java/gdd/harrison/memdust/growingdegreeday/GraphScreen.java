@@ -55,7 +55,7 @@ public class GraphScreen extends AppCompatActivity {
     public void createLineSeries() {
         for (int i = 0; i < 3; i++) {
             if (i == 2){
-                LineGraphSeries<DataPoint> horizontalLineSeries = new LineGraphSeries<>(createHorizontalLine(dataArray[i], dataArray[1].length()));
+                LineGraphSeries<DataPoint> horizontalLineSeries = new LineGraphSeries<>(createHorizontalLine(dataArray[i]));
                 horizontalLineSeries.setColor(Color.BLACK);
                 allDataSeries.add(horizontalLineSeries);
             }
@@ -67,9 +67,9 @@ public class GraphScreen extends AppCompatActivity {
         }
     }
 
-    public DataPoint[] createHorizontalLine(String rawLayerString,int size){
-        DataPoint[] dataPoints = new DataPoint[size];
-        for (int i = 0; i < size; i++){
+    public DataPoint[] createHorizontalLine(String rawLayerString){
+        DataPoint[] dataPoints = new DataPoint[365];
+        for (int i = 0; i < 365; i++){
             dataPoints[i] = new DataPoint(i, Double.parseDouble(rawLayerString));
         }
         return dataPoints;
