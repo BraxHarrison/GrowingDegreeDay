@@ -24,6 +24,7 @@ public class MainHubActivity extends AppCompatActivity {
     GDDDataOrganizer organizer = new GDDDataOrganizer();
     TextView latitude;
     TextView longitude;
+    String[] dataForGraph = new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,17 +133,21 @@ public class MainHubActivity extends AppCompatActivity {
             public void onClick(View view){
                 organizer.setLatitude(latitude.getText().toString());
                 organizer.setLongitude(longitude.getText().toString());
-                System.out.println(organizer.latitude);
-                System.out.println(organizer.longitude);
                 String[] data = organizer.beginRetrievingData();
-                switchToGraphActivity(data);
+                addOnlySomePartsOfTheData(data);
+                dataForGraph[2] = organizer.getBlackLayer();
+                switchToGraphActivity();
             }
         });
-
     }
-    protected void switchToGraphActivity(String[] data){
+
+    protected void addOnlySomePartsOfTheData(String[] data){
+        System.arraycopy(data, 0, dataForGraph, 0, 2);
+    }
+
+    protected void switchToGraphActivity(){
         Intent graphActivitySwitchIntent = new Intent(this, GraphScreen.class );
-        graphActivitySwitchIntent.putExtra("dataStringArray",data);
+        graphActivitySwitchIntent.putExtra("dataStringArray",dataForGraph);
         startActivity(graphActivitySwitchIntent);
     }
 

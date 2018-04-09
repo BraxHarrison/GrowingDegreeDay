@@ -1,6 +1,7 @@
 package gdd.harrison.memdust.growingdegreeday;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ public class GraphScreen extends AppCompatActivity {
     ArrayList<LineGraphSeries> allDataSeries = new ArrayList<>();
     Button currentButton;
     Button minTempButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +50,29 @@ public class GraphScreen extends AppCompatActivity {
     public void listenToButtons(){
         listenForCurrentButton();
         listenForMinTempButton();
-
     }
 
     public void createLineSeries() {
-        for (int i = 0; i < 4; i++) {
-            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dataArray[i]));
-            series.setTitle("Corn Growing Degree Day Tracker");
-            allDataSeries.add(series);
+        for (int i = 0; i < 3; i++) {
+            if (i == 2){
+                LineGraphSeries<DataPoint> horizontalLineSeries = new LineGraphSeries<>(createHorizontalLine(dataArray[i], dataArray[1].length()));
+                horizontalLineSeries.setColor(Color.BLACK);
+                allDataSeries.add(horizontalLineSeries);
+            }
+            else {
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dataArray[i]));
+                series.setTitle("Corn Growing Degree Day Tracker");
+                allDataSeries.add(series);
+            }
         }
+    }
+
+    public DataPoint[] createHorizontalLine(String rawLayerString,int size){
+        DataPoint[] dataPoints = new DataPoint[size];
+        for (int i = 0; i < size; i++){
+            dataPoints[i] = new DataPoint(i, Double.parseDouble(rawLayerString));
+        }
+        return dataPoints;
     }
 
     public DataPoint[] parseData(String rawGDDData) {
@@ -64,7 +80,7 @@ public class GraphScreen extends AppCompatActivity {
         DataPoint[] dataPoints = new DataPoint[splitStrings.length];
         for (int i = 0; i < splitStrings.length; i++) {
             dataPoints[i] = new DataPoint(i, Integer.parseInt(splitStrings[i]));
-        }
+            }
         return dataPoints;
     }
 
@@ -84,6 +100,7 @@ public class GraphScreen extends AppCompatActivity {
                 graph.getViewport().setYAxisBoundsManual(true);
                 graph.getViewport().setXAxisBoundsManual(true);
                 graph.addSeries(allDataSeries.get(0));
+                graph.addSeries(allDataSeries.get(2));
             }
         });
     }
