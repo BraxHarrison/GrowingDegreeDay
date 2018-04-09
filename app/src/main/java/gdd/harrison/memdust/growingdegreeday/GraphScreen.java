@@ -53,7 +53,7 @@ public class GraphScreen extends AppCompatActivity {
     }
 
     public void createLineSeries() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             if ((i == 2) || (i == 3)){
                 LineGraphSeries<DataPoint> horizontalLineSeries = new LineGraphSeries<>(createHorizontalLine(dataArray[i]));
                 if (i == 2){
@@ -64,12 +64,27 @@ public class GraphScreen extends AppCompatActivity {
                 }
                 allDataSeries.add(horizontalLineSeries);
             }
+            else if (i == 4){
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseAverages(dataArray[i]));
+                series.setTitle("Corn GDD Average");
+                allDataSeries.add(series);
+                series.setColor(Color.rgb(160,32,240));
+            }
             else {
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dataArray[i]));
                 series.setTitle("Corn Growing Degree Day Tracker");
                 allDataSeries.add(series);
             }
         }
+    }
+
+    public DataPoint[] parseAverages(String rawAveragesString){
+        String[] splitStrings = rawAveragesString.split(",");
+        DataPoint[] dataPoints = new DataPoint[splitStrings.length];
+        for (int i = 0; i < splitStrings.length; i++){
+            dataPoints[i] = new DataPoint(i, Double.parseDouble(splitStrings[i]));
+        }
+        return dataPoints;
     }
 
     public DataPoint[] createHorizontalLine(String rawLayerString){
@@ -100,13 +115,14 @@ public class GraphScreen extends AppCompatActivity {
                 gridLabelRenderer.setVerticalAxisTitle("Growing Degree Days");
                 graph.getViewport().setMinX(0);
                 graph.getViewport().setMinY(0);
-                graph.getViewport().setMaxX(365);
-                graph.getViewport().setMaxY(3000);
+                graph.getViewport().setMaxX(380);
+                graph.getViewport().setMaxY(4000);
                 graph.getViewport().setYAxisBoundsManual(true);
                 graph.getViewport().setXAxisBoundsManual(true);
                 graph.addSeries(allDataSeries.get(0));
                 graph.addSeries(allDataSeries.get(2));
                 graph.addSeries(allDataSeries.get(3));
+                graph.addSeries(allDataSeries.get(4));
             }
         });
     }

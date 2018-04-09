@@ -38,6 +38,15 @@ class GDDDataOrganizer {
         return String.valueOf(calculator.calculateSilkLayer(maturityValue));
     }
 
+    String getAccumulatedAverage(){
+        return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(fetchedData[2])));
+    }
+
+    private String removeExcessCharacters(String unformattedString){
+        String halfFormattedString = unformattedString.replace("[", "");
+        return halfFormattedString.replace("]", "");
+    }
+
 
     private String[] attemptToRetrieveDataInBackground(){
         GDDDataRetriever dataRetriever = new GDDDataRetriever();
