@@ -1,12 +1,13 @@
 package gdd.harrison.memdust.growingdegreeday;
 
 import android.support.v7.app.AppCompatActivity;
-
-/**
- * Created by cacto on 4/6/2018.
- */
+import android.os.Bundle;
 
 public class TableScreen extends AppCompatActivity {
 
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_table_screen);
+    }
 }
