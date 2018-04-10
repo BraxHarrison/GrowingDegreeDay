@@ -17,6 +17,7 @@
     <string name="initial_latitude">40.116</string>
     <string name="Longitude_title">Longitude:</string>
     <string name="view_graph">View Graph</string>
+    <string name="view_table">View Table</string>
     <string name="cumulative_gdd_data">Cumulative GDD Data</string>
     <string name="this_year_s_gdd_data">This Year\'s GDD Data</string>
     <string name="current_year_min_data">Current Year Min Data</string>
@@ -26,7 +27,7 @@
     <string name="corn_maturity_days">Corn Maturity Days:</string>
     <string name="freeze_temperature">Freeze Temperature:</string>
     <string name="save_settings">Save Settings</string>
-    <string-array name = "Months">
+    <string-array name="Months">
         <item>January</item>
         <item>February</item>
         <item>March</item>
@@ -39,7 +40,7 @@
         <item>November</item>
         <item>December</item>
     </string-array>
-    <string-array name = "corn_maturity_days_array">
+    <string-array name="corn_maturity_days_array">
         <item>72</item>
         <item>73</item>
         <item>74</item>
@@ -105,7 +106,7 @@
         <item>134</item>
         <item>135</item>
     </string-array>
-    <string-array name = "daysOfMonth">
+    <string-array name="daysOfMonth">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -138,7 +139,7 @@
         <item>30</item>
         <item>31</item>
     </string-array>
-    <string-array name = "freezingTemps">
+    <string-array name="freezingTemps">
         <item>25</item>
         <item>26</item>
         <item>27</item>
@@ -150,5 +151,13 @@
         <item>33</item>
         <item>34</item>
         <item>35</item>
+    </string-array>
+    <string-array name="selectionOptions">
+        <item>Noodles</item>
+        <item>Shoodles</item>
+
+
+
+
     </string-array>
 </resources>

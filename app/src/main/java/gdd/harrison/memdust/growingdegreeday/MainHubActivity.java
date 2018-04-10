@@ -18,6 +18,7 @@ import java.util.Arrays;
 public class MainHubActivity extends AppCompatActivity {
 
     Button mapScreenSwitchButton;
+    Button tableScreenSwitchButton;
     Button graphScreenSwitchButton;
     Button dataFetchingButton;
     Button settingsButton;
@@ -70,6 +71,7 @@ public class MainHubActivity extends AppCompatActivity {
         mapScreenSwitchButton = findViewById(R.id.mapButton);
         graphScreenSwitchButton = findViewById(R.id.graphButton);
         dataFetchingButton = findViewById(R.id.getLocation);
+        tableScreenSwitchButton = findViewById(R.id.tableButton);
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
         settingsButton=findViewById(R.id.settingsButton);
@@ -79,7 +81,22 @@ public class MainHubActivity extends AppCompatActivity {
         listenForMapButtonClick(mapScreenSwitchButton);
         listenForGraphButtonClick(graphScreenSwitchButton);
         listenForDataFetchingClick(dataFetchingButton);
+        listenForTableButtonClick();
         listenForSettingsButtonClick();
+    }
+
+    private void listenForTableButtonClick() {
+        tableScreenSwitchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchToTableActivity();
+            }
+        });
+    }
+
+    private void switchToTableActivity() {
+        Intent tableViewIntent = new Intent(this, TableScreen.class);
+        startActivity(tableViewIntent);
     }
 
     protected void listenForSettingsButtonClick(){

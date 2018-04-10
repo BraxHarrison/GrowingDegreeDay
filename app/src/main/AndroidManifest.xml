@@ -33,7 +33,7 @@
 
         <activity
             android:name=".MapScreen"
-            android:label="@string/title_activity_map_screen"></activity>
+            android:label="@string/title_activity_map_screen" />
         <activity android:name=".MainHubActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,8 +42,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".GraphScreen" />
-        <activity android:name=".OnlineDataTestActivity"></activity>
-        <activity android:name=".SettingsScreenActivity"></activity>
+        <activity android:name=".OnlineDataTestActivity" />
+        <activity android:name=".SettingsScreenActivity" />
+        <activity android:name=".TableScreen"></activity>
     </application>
 
 </manifest>
