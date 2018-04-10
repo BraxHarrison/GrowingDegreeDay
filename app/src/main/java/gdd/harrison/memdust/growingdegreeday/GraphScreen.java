@@ -2,6 +2,8 @@ package gdd.harrison.memdust.growingdegreeday;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -53,7 +55,7 @@ public class GraphScreen extends AppCompatActivity {
     }
 
     public void createLineSeries() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             if ((i == 2) || (i == 3)){
                 LineGraphSeries<DataPoint> horizontalLineSeries = new LineGraphSeries<>(createHorizontalLine(dataArray[i]));
                 if (i == 2){
@@ -70,6 +72,18 @@ public class GraphScreen extends AppCompatActivity {
                 allDataSeries.add(series);
                 series.setColor(Color.rgb(160,32,240));
             }
+            else if (i == 5) {
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseAverages(dataArray[i]));
+                series.setTitle("Corn GDD Median for Period of Record");
+                allDataSeries.add(series);
+                Paint paint = new Paint();
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(10);
+                paint.setPathEffect(new DashPathEffect(new float[]{650, 500}, 0));
+                series.setDrawAsPath(true);
+                series.setCustomPaint(paint);
+            }
+
             else {
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dataArray[i]));
                 series.setTitle("Corn Growing Degree Day Tracker");
@@ -123,6 +137,7 @@ public class GraphScreen extends AppCompatActivity {
                 graph.addSeries(allDataSeries.get(2));
                 graph.addSeries(allDataSeries.get(3));
                 graph.addSeries(allDataSeries.get(4));
+                graph.addSeries(allDataSeries.get(5));
             }
         });
     }

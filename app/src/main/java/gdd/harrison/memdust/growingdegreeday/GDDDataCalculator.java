@@ -1,6 +1,7 @@
 package gdd.harrison.memdust.growingdegreeday;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 class GDDDataCalculator {
@@ -13,14 +14,29 @@ class GDDDataCalculator {
         return (11.459*maturityValue) +100.27;
     }
 
-    /*ArrayList<Double> calculateTotalMedians(String[] accumulatedData){
+    ArrayList<Double> calculateTotalMedians(String[] accumulatedData){
         ArrayList<Double> medians = new ArrayList<>();
         ArrayList<ArrayList<String>> listOfAllYears = organizeAccumulatedGDDs(accumulatedData);
         for (int i = 0; i<listOfAllYears.get(0).size();i++){
             Double[] listOfDoubles = new Double[listOfAllYears.size()];
-            for (int j = 0; j < listOfAllYears.size());
+            for (int j = 0; j < listOfAllYears.size(); j++){
+                listOfDoubles[j] = Double.parseDouble(listOfAllYears.get(j).get(i));
+            }
+            Arrays.sort(listOfDoubles);
+            medians.add(calculateMedian(listOfDoubles));
         }
-    }*/
+        return medians;
+    }
+
+    Double calculateMedian (Double[] list){
+        int middleNumber = list.length/2;
+        if (list.length%2 == 0){
+            return (list[middleNumber] + list[middleNumber -1])/2.0;
+        }
+        else{
+            return list[middleNumber];
+        }
+    }
 
     ArrayList<Double> calculateTotalGDDAverage(String[] accumulatedData) {
         ArrayList<Double> averages = new ArrayList<>();

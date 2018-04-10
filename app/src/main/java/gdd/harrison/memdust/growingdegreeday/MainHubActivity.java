@@ -24,7 +24,7 @@ public class MainHubActivity extends AppCompatActivity {
     GDDDataOrganizer organizer = new GDDDataOrganizer();
     TextView latitude;
     TextView longitude;
-    String[] dataForGraph = new String[5];
+    String[] dataForGraph = new String[6];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +138,7 @@ public class MainHubActivity extends AppCompatActivity {
                 dataForGraph[2] = organizer.getBlackLayer();
                 dataForGraph[3] = organizer.getSilkLayer();
                 dataForGraph[4] = organizer.getAccumulatedAverage();
+                dataForGraph[5] = organizer.getAccumulatedMedian();
                 switchToGraphActivity();
             }
         });

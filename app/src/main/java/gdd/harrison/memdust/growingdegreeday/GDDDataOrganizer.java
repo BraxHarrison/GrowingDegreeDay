@@ -43,6 +43,11 @@ class GDDDataOrganizer {
         return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(accumulatedDataIntoArray)));
     }
 
+    String getAccumulatedMedian(){
+        String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
+        return removeExcessCharacters(String.valueOf(calculator.calculateTotalMedians(accumulatedDataIntoArray)));
+    }
+
     private String removeExcessCharacters(String unformattedString){
         String halfFormattedString = unformattedString.replace("[", "");
         return halfFormattedString.replace("]", "");
