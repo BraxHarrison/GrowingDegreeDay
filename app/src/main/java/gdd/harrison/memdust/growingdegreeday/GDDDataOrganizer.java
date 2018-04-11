@@ -1,5 +1,7 @@
 package gdd.harrison.memdust.growingdegreeday;
 
+import java.util.ArrayList;
+
 class GDDDataOrganizer {
 
     protected String latitude;
@@ -8,6 +10,7 @@ class GDDDataOrganizer {
     private GDDDataCalculator calculator = new GDDDataCalculator();
     private String[] fetchedData;
     private double maturityValue = 72.0;
+    private int currentDay;
     private String[] cornGrowingStages = new String[5];
 
     private void buildURLs(){
@@ -47,6 +50,20 @@ class GDDDataOrganizer {
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
         return removeExcessCharacters(String.valueOf(calculator.calculateTotalMedians(accumulatedDataIntoArray)));
     }
+
+    String getGDDProjection(){
+        String[] accumulatedModels = fetchedData[3].split(" ");
+        String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
+        String gddProjection = removeExcessCharacters(String.valueOf(calculator.calculateGDDProjection(accumulatedDataIntoArray, accumulatedModels)));
+        currentDay = calculator.getModelDay();
+        return gddProjection;
+    }
+
+    int getCurrentDay(){
+        return currentDay;
+    }
+
+
 
     private String removeExcessCharacters(String unformattedString){
         String halfFormattedString = unformattedString.replace("[", "");

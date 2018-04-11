@@ -6,12 +6,52 @@ import java.util.Calendar;
 
 class GDDDataCalculator {
 
+    int modelDay;
+
+    public int getModelDay(){
+        return modelDay;
+    }
+
     double calculateBlackLayer(double maturityValue){
         return (24.16* maturityValue) - 15.388;
     }
 
     double calculateSilkLayer(double maturityValue){
         return (11.459*maturityValue) +100.27;
+    }
+
+    ArrayList<Double> calculateGDDProjection(String[] accumulatedData, String[] modelData){
+        int month = getCurrentMonth();
+        int dayOfMonth = getCurrentDayOfMonth();
+        int dayNumber = calculateDayNumber(month, dayOfMonth);
+        modelDay = dayNumber;
+        ArrayList<Double> gddProjection = new ArrayList<>();
+        ArrayList<ArrayList<String>> listOfAllModels = organizeModels(modelData, dayNumber);
+        int modelNumber = 0;
+        Double[] gddForecast = new Double[listOfAllModels.size()];
+        for(ArrayList<String> s : listOfAllModels){
+            gddForecast[modelNumber]= Double.parseDouble(s.get(dayNumber-2));
+            modelNumber++;
+            }
+        gddProjection.add(calculateModelAverage(gddForecast));
+        ArrayList<Double> totalAverage = calculateTotalGDDAverage(accumulatedData);
+        System.out.println(totalAverage);
+        for (int i = dayNumber - 1; i < totalAverage.size(); i++){
+            gddProjection.add(totalAverage.get(i));
+        }
+        System.out.println(gddProjection);
+        return gddProjection;
+        }
+
+
+    private double calculateModelAverage(Double[] forecast) {
+        System.out.println(Arrays.toString(forecast));
+        double sum = 0;
+        for (int i = 0; i < forecast.length; i++){
+            sum = sum + forecast[i];
+        }
+        System.out.println(sum/forecast.length);
+        return sum/forecast.length;
     }
 
     ArrayList<Double> calculateTotalMedians(String[] accumulatedData){
@@ -27,6 +67,10 @@ class GDDDataCalculator {
         }
         return medians;
     }
+
+
+
+
 
     Double calculateMedian (Double[] list){
         int middleNumber = list.length/2;
@@ -49,6 +93,21 @@ class GDDDataCalculator {
             averages.add(sumOfAllYearsOnSingleDay/listOfAllYears.size());
         }
         return averages;
+    }
+
+    ArrayList<ArrayList<String>> organizeModels(String[] modelData, int dayNumber){
+        ArrayList<ArrayList<String>> listOfModels = new ArrayList<>();
+        int modelBeginIndex = 0;
+        for (int i = 0; i < modelData.length/dayNumber; i++){
+            ArrayList<String> singleModel = new ArrayList<>();
+            for (int j = modelBeginIndex; j <= modelBeginIndex + dayNumber-1; j++){
+                singleModel.add(modelData[j]);
+            }
+            System.out.println(singleModel);
+            modelBeginIndex = modelBeginIndex + dayNumber;
+            listOfModels.add(singleModel);
+        }
+        return listOfModels;
     }
 
     private ArrayList<ArrayList<String>> organizeAccumulatedGDDs(String[] accumulatedData){
@@ -106,6 +165,34 @@ class GDDDataCalculator {
 
     private int getCurrentYear(){
         return Calendar.getInstance().get(Calendar.YEAR);
+    }
+
+    private int getCurrentMonth(){
+        return Calendar.getInstance().get(Calendar.MONTH);
+    }
+
+    private int getCurrentDayOfMonth(){
+        return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+    }
+
+    private int calculateDayNumber(int month, int day){
+        int DayNumber = 0;
+        for (int i = 1; i <= month; i++){
+            if ((i == 1) || (i ==3) || (i ==5) || (i == 7) || (i ==8) || (i ==10) || (i == 12)){
+                DayNumber = DayNumber + 31;
+            }
+            else if ((i==4)||(i==6)||(i==9)||(i==11)){
+                DayNumber = DayNumber + 30;
+            }
+            else if(isLeapYear(getCurrentYear())){
+                DayNumber = DayNumber + 29;
+            }
+            else{
+                DayNumber = DayNumber + 28;
+            }
+        }
+        DayNumber = DayNumber + day;
+        return DayNumber;
     }
 
     private int determineNumberOfDaysInYear(int currentYear){

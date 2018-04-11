@@ -72,24 +72,29 @@ public class GraphScreen extends AppCompatActivity {
                 allDataSeries.add(series);
                 series.setColor(Color.rgb(160,32,240));
             }
-            else if (i == 5) {
-                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseAverages(dataArray[i]));
-                series.setTitle("Corn GDD Median for Period of Record");
+            else if (i ==5){
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseProjection(dataArray[i]));
+                series.setTitle("GDD projection");
                 allDataSeries.add(series);
-                Paint paint = new Paint();
-                paint.setStyle(Paint.Style.STROKE);
-                paint.setStrokeWidth(10);
-                paint.setPathEffect(new DashPathEffect(new float[]{650, 500}, 0));
-                series.setDrawAsPath(true);
-                series.setCustomPaint(paint);
+                series.setColor(Color.GREEN);
             }
-
             else {
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dataArray[i]));
                 series.setTitle("Corn Growing Degree Day Tracker");
                 allDataSeries.add(series);
             }
         }
+    }
+
+    public DataPoint[] parseProjection(String rawProjectionString){
+        String[] splitStrings = rawProjectionString.split(",");
+        DataPoint[] dataPoints = new DataPoint[splitStrings.length];
+        double dataPointValue = Double.parseDouble(dataArray[6]);
+        for (int i = 0; i < splitStrings.length; i++){
+            dataPoints[i] = new DataPoint(dataPointValue, Double.parseDouble(splitStrings[i]));
+            dataPointValue++;
+        }
+        return dataPoints;
     }
 
     public DataPoint[] parseAverages(String rawAveragesString){
