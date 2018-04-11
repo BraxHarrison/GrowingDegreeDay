@@ -54,7 +54,8 @@ class GDDDataOrganizer {
     String getGDDProjection(){
         String[] accumulatedModels = fetchedData[3].split(" ");
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
-        String gddProjection = removeExcessCharacters(String.valueOf(calculator.calculateGDDProjection(accumulatedDataIntoArray, accumulatedModels)));
+        String[] accumulatedCurrentData = fetchedData[0].split(" ");
+        String gddProjection = removeExcessCharacters(String.valueOf(calculator.calculateGDDProjection(accumulatedDataIntoArray, accumulatedModels, accumulatedCurrentData)));
         currentDay = calculator.getModelDay();
         return gddProjection;
     }

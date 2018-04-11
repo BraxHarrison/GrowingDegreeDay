@@ -2,8 +2,6 @@ package gdd.harrison.memdust.growingdegreeday;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -76,7 +74,7 @@ public class GraphScreen extends AppCompatActivity {
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseProjection(dataArray[i]));
                 series.setTitle("GDD projection");
                 allDataSeries.add(series);
-                series.setColor(Color.GREEN);
+                series.setColor(Color.rgb(0, 100, 0));
             }
             else {
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dataArray[i]));

@@ -20,7 +20,7 @@ class GDDDataCalculator {
         return (11.459*maturityValue) +100.27;
     }
 
-    ArrayList<Double> calculateGDDProjection(String[] accumulatedData, String[] modelData){
+    ArrayList<Double> calculateGDDProjection(String[] accumulatedData, String[] modelData, String[] currentData){
         int month = getCurrentMonth();
         int dayOfMonth = getCurrentDayOfMonth();
         int dayNumber = calculateDayNumber(month, dayOfMonth);
@@ -33,7 +33,7 @@ class GDDDataCalculator {
             gddForecast[modelNumber]= Double.parseDouble(s.get(dayNumber-2));
             modelNumber++;
             }
-        gddProjection.add(calculateModelAverage(gddForecast));
+        gddProjection.add(calculateModelAverage(gddForecast, currentData));
         ArrayList<Double> totalAverage = calculateTotalGDDAverage(accumulatedData);
         System.out.println(totalAverage);
         for (int i = dayNumber - 1; i < totalAverage.size(); i++){
@@ -44,14 +44,15 @@ class GDDDataCalculator {
         }
 
 
-    private double calculateModelAverage(Double[] forecast) {
+    private double calculateModelAverage(Double[] forecast, String[] currentData) {
         System.out.println(Arrays.toString(forecast));
         double sum = 0;
         for (int i = 0; i < forecast.length; i++){
             sum = sum + forecast[i];
         }
-        System.out.println(sum/forecast.length);
-        return sum/forecast.length;
+        System.out.println((sum/forecast.length));
+        double amountOfChange = Double.parseDouble(currentData[currentData.length-1]) - (sum/forecast.length);
+        return Double.parseDouble(currentData[currentData.length-1]) + amountOfChange;
     }
 
     ArrayList<Double> calculateTotalMedians(String[] accumulatedData){
