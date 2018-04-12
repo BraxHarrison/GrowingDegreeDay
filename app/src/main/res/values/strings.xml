@@ -153,11 +153,18 @@
         <item>35</item>
     </string-array>
     <string-array name="selectionOptions">
-        <item>Noodles</item>
-        <item>Shoodles</item>
-
-
-
-
+        <item>GDD Accumulation</item>
+        <item>V2</item>
+        <item>V4</item>
+        <item>V6</item>
+        <item>V8</item>
+        <item>V10</item>
+        <item>Silking Layer</item>
+        <item>Black Layer</item>
+    </string-array>
+    <string-array name="accumulatedDetails">
+        <item>Accumulated GDD</item>
+        <item>GDD Per Day</item>
+        <item>Vegetation Stage</item>
     </string-array>
 </resources>

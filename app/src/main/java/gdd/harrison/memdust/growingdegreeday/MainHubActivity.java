@@ -26,6 +26,7 @@ public class MainHubActivity extends AppCompatActivity {
     TextView latitude;
     TextView longitude;
     String[] dataForGraph = new String[7];
+    String[] dataForTable = new String[4];
 
 
     @Override
@@ -90,6 +91,11 @@ public class MainHubActivity extends AppCompatActivity {
         tableScreenSwitchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String[] data = organizer.beginRetrievingData();
+                addOnlySomePartsOfTheDataTable(data);
+                dataForTable[1] = organizer.getCornStages();
+                dataForTable[2] = organizer.getBlackLayer();
+                dataForTable[3] = organizer.getSilkLayer();
                 switchToTableActivity();
             }
         });
@@ -97,6 +103,7 @@ public class MainHubActivity extends AppCompatActivity {
 
     private void switchToTableActivity() {
         Intent tableViewIntent = new Intent(this, TableScreen.class);
+        tableViewIntent.putExtra("dataForTable", dataForTable);
         startActivity(tableViewIntent);
     }
 
@@ -165,6 +172,10 @@ public class MainHubActivity extends AppCompatActivity {
 
     protected void addOnlySomePartsOfTheData(String[] data){
         System.arraycopy(data, 0, dataForGraph, 0, 2);
+    }
+
+    protected void addOnlySomePartsOfTheDataTable(String[] data){
+        dataForTable[0] = data[0];
     }
 
     protected void switchToGraphActivity(){

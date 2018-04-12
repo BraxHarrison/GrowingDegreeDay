@@ -1,6 +1,7 @@
 package gdd.harrison.memdust.growingdegreeday;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 class GDDDataOrganizer {
 
@@ -41,15 +42,15 @@ class GDDDataOrganizer {
         return String.valueOf(calculator.calculateSilkLayer(maturityValue));
     }
 
+    String getCornStages(){
+        return Arrays.toString(calculator.calculateCornLayers());
+    }
+
     String getAccumulatedAverage(){
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
         return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(accumulatedDataIntoArray)));
     }
 
-    String getAccumulatedMedian(){
-        String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
-        return removeExcessCharacters(String.valueOf(calculator.calculateTotalMedians(accumulatedDataIntoArray)));
-    }
 
     String getGDDProjection(){
         String[] accumulatedModels = fetchedData[3].split(" ");

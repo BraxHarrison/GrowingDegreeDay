@@ -23,7 +23,6 @@ public class GraphScreen extends AppCompatActivity {
     Button currentButton;
     Button minTempButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

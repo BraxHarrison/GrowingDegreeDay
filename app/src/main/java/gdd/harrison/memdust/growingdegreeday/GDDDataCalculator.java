@@ -69,10 +69,6 @@ class GDDDataCalculator {
         return medians;
     }
 
-
-
-
-
     Double calculateMedian (Double[] list){
         int middleNumber = list.length/2;
         if (list.length%2 == 0){
@@ -210,6 +206,16 @@ class GDDDataCalculator {
         return currentYear % 4 == 0 && (currentYear % 100 != 0 || currentYear % 400 == 0);
     }
 
+    double[] calculateCornLayers(){
+        double[] cornLayers = new double[5];
+        cornLayers[0] = calculateV2Layer();
+        double previousLayer = cornLayers[0];
+        for (int i = 1; i < cornLayers.length; i++){
+            cornLayers[i] = calculateVLayer(previousLayer);
+            previousLayer = cornLayers[i];
+        }
+        return cornLayers;
+    }
 
     double calculateV2Layer(){
         return 105.0 + 168.0;
