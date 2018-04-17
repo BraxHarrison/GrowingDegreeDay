@@ -18,6 +18,7 @@
     <string name="Longitude_title">Longitude:</string>
     <string name="view_graph">View Graph</string>
     <string name="view_table">View Table</string>
+    <string name="receive_notifications">Receive Notifications</string>
     <string name="cumulative_gdd_data">Cumulative GDD Data</string>
     <string name="this_year_s_gdd_data">This Year\'s GDD Data</string>
     <string name="current_year_min_data">Current Year Min Data</string>

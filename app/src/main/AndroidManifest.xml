@@ -30,7 +30,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <activity
             android:name=".MapScreen"
             android:label="@string/title_activity_map_screen" />
@@ -44,7 +43,10 @@
         <activity android:name=".GraphScreen" />
         <activity android:name=".OnlineDataTestActivity" />
         <activity android:name=".SettingsScreenActivity" />
-        <activity android:name=".TableScreen"></activity>
+        <activity android:name=".TableScreen" />
+        <receiver
+            android:process=":remote"
+            android:name=".NotificationAlarm" />
     </application>
 
 </manifest>
