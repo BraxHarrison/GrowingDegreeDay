@@ -13,29 +13,41 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class MainHubActivity extends AppCompatActivity {
 
-    Button mapScreenSwitchButton;
-    Button tableScreenSwitchButton;
-    Button graphScreenSwitchButton;
-    Button dataFetchingButton;
-    Button settingsButton;
+    ArrayList<Button> buttonList = new ArrayList<>();
     GDDDataOrganizer organizer = new GDDDataOrganizer();
-    TextView latitude;
-    TextView longitude;
     String[] dataForGraph = new String[7];
     String[] dataForTable = new String[4];
-
+    int[] buttonIds = new int[]{R.id.mapButton, R.id.graphButton, R.id.tableButton, R.id.settingsButton, R.id.getLocation};
+    Class[] classList = new Class[]{MapScreen.class, GraphScreen.class, TableScreen.class, SettingsScreenActivity.class};
+    TextView latitude;
+    TextView longitude;
+    String[] data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub_screen_experimental);
-        setUpIds();
+        setUpButtons();
+        setUpLatitudeAndLongitude();
         setLatitudeAndLongitude();
         setUpListeners();
+        data = organizer.beginRetrievingData();
+    }
+
+    protected void setUpButtons(){
+        for (int buttonId : buttonIds) {
+            Button thisButton = findViewById(buttonId);
+            buttonList.add(thisButton);
+        }
+    }
+
+    protected void setUpLatitudeAndLongitude(){
+        latitude = findViewById(R.id.latitude);
+        longitude = findViewById(R.id.longitude);
     }
 
     protected void onStart(){
@@ -69,75 +81,64 @@ public class MainHubActivity extends AppCompatActivity {
         organizer.setLongitude(longitude.getText().toString());
     }
 
-    protected void setUpIds(){
-        mapScreenSwitchButton = findViewById(R.id.mapButton);
-        graphScreenSwitchButton = findViewById(R.id.graphButton);
-        dataFetchingButton = findViewById(R.id.getLocation);
-        tableScreenSwitchButton = findViewById(R.id.tableButton);
-        latitude = findViewById(R.id.latitude);
-        longitude = findViewById(R.id.longitude);
-        settingsButton=findViewById(R.id.settingsButton);
+    private void setUpListeners(){
+        for (int i = 0; i < buttonList.size(); i++){
+            final int finalI = i;
+            buttonList.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if ((finalI == 1) || (finalI == 2)){
+                        addOnlySomePartsOfTheData(data);
+                        addCorrectDataNeeded(finalI);
+                        switchToCorrectActivity(finalI, classList[finalI]);
+                    }
+                    else if ((finalI == 4)){
+                        replacelatlonTextView(checkLocationData());
+                    }
+                    else{
+                        switchToCorrectActivity(finalI, classList[finalI]);
+                    }
+                }
+            });
+        }
     }
 
-    protected void setUpListeners(){
-        listenForMapButtonClick(mapScreenSwitchButton);
-        listenForGraphButtonClick(graphScreenSwitchButton);
-        listenForDataFetchingClick(dataFetchingButton);
-        listenForTableButtonClick();
-        listenForSettingsButtonClick();
+    void switchToCorrectActivity(int i, Class specificClass){
+        Intent viewIntent = new Intent(this, specificClass);
+        viewIntent = putCorrectExtras(viewIntent, i);
+        startActivity(viewIntent);
     }
 
-    private void listenForTableButtonClick() {
-        tableScreenSwitchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String[] data = organizer.beginRetrievingData();
-                addOnlySomePartsOfTheDataTable(data);
-                dataForTable[1] = organizer.getCornStages();
-                dataForTable[2] = organizer.getBlackLayer();
-                dataForTable[3] = organizer.getSilkLayer();
-                switchToTableActivity();
-            }
-        });
+    Intent putCorrectExtras(Intent intent, int i){
+        if (i == 1){
+            intent.putExtra("dataForDisplay", dataForGraph);
+        }
+        else if (i == 2){
+            intent.putExtra("dataForDisplay", dataForTable);
+        }
+        return intent;
     }
 
-    private void switchToTableActivity() {
-        Intent tableViewIntent = new Intent(this, TableScreen.class);
-        tableViewIntent.putExtra("dataForTable", dataForTable);
-        startActivity(tableViewIntent);
-    }
 
-    protected void listenForSettingsButtonClick(){
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchToSettingsActivity();
-            }
-        });
-    }
-
-    protected void listenForMapButtonClick(Button buttonListener){
-        buttonListener.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                switchToMapActivity();
-            }
-        });
-    }
-
-    protected void listenForDataFetchingClick(Button buttonListener){
-        buttonListener.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                double[] latlon = checkLocationData();
-                replacelatlonTextView(latlon);
-            }
-        });
-    }
-
-    protected void switchToSettingsActivity(){
-        Intent settingActivitySwitchIntent = new Intent(this, SettingsScreenActivity.class);
-        startActivity(settingActivitySwitchIntent);
+    void addCorrectDataNeeded(int i){
+        if (i == 1){
+            organizer.setLatitude(latitude.getText().toString());
+            organizer.setLongitude(longitude.getText().toString());
+            String[] data = organizer.beginRetrievingData();
+            addOnlySomePartsOfTheData(data);
+            dataForGraph[2] = organizer.getBlackLayer();
+            dataForGraph[3] = organizer.getSilkLayer();
+            dataForGraph[4] = organizer.getAccumulatedAverage();
+            dataForGraph[5] = organizer.getGDDProjection();
+            dataForGraph[6] = String.valueOf(organizer.getCurrentDay());
+        }
+        if (i==2){
+            String[]data = organizer.beginRetrievingData();
+            addOnlySomePartsOfTheDataTable(data);
+            dataForTable[1] = organizer.getCornStages();
+            dataForTable[2] = organizer.getBlackLayer();
+            dataForTable[3] = organizer.getSilkLayer();
+        }
     }
 
     protected void replacelatlonTextView(double[] latlong){
@@ -147,41 +148,12 @@ public class MainHubActivity extends AppCompatActivity {
         this.longitude.setText(longitude);
     }
 
-    protected void switchToMapActivity(){
-        Intent mapActivitySwitchIntent = new Intent(this, MapScreen.class);
-        startActivity(mapActivitySwitchIntent);
-    }
-
-    protected void listenForGraphButtonClick(Button buttonListener){
-        buttonListener.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                organizer.setLatitude(latitude.getText().toString());
-                organizer.setLongitude(longitude.getText().toString());
-                String[] data = organizer.beginRetrievingData();
-                addOnlySomePartsOfTheData(data);
-                dataForGraph[2] = organizer.getBlackLayer();
-                dataForGraph[3] = organizer.getSilkLayer();
-                dataForGraph[4] = organizer.getAccumulatedAverage();
-                dataForGraph[5] = organizer.getGDDProjection();
-                dataForGraph[6] = String.valueOf(organizer.getCurrentDay());
-                switchToGraphActivity();
-            }
-        });
-    }
-
     protected void addOnlySomePartsOfTheData(String[] data){
         System.arraycopy(data, 0, dataForGraph, 0, 2);
     }
 
     protected void addOnlySomePartsOfTheDataTable(String[] data){
         dataForTable[0] = data[0];
-    }
-
-    protected void switchToGraphActivity(){
-        Intent graphActivitySwitchIntent = new Intent(this, GraphScreen.class );
-        graphActivitySwitchIntent.putExtra("dataStringArray",dataForGraph);
-        startActivity(graphActivitySwitchIntent);
     }
 
 }

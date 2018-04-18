@@ -23,7 +23,7 @@ public class TableScreen extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_screen);
         Intent thisIntent = getIntent();
-        dataArray = thisIntent.getStringArrayExtra("dataForTable");
+        dataArray = thisIntent.getStringArrayExtra("dataForDisplay");
         System.out.println(Arrays.toString(dataArray));
         smallSpinner = (Spinner) findViewById(R.id.spinner);
         largeSpinner = findViewById(R.id.spinner2);
