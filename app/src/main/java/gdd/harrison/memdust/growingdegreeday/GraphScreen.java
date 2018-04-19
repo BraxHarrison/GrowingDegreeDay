@@ -35,7 +35,7 @@ public class GraphScreen extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         Intent intent = getIntent();
-        dataArray = intent.getStringArrayExtra("dataStringArray");
+        dataArray = intent.getStringArrayExtra("dataForDisplay");
         graph = findViewById(R.id.graph);
         createLineSeries();
     }

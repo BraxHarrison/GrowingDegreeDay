@@ -23,8 +23,7 @@ public class TableScreen extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_screen);
         Intent thisIntent = getIntent();
-        dataArray = thisIntent.getStringArrayExtra("dataForTable");
-        System.out.println(Arrays.toString(dataArray));
+        dataArray = thisIntent.getStringArrayExtra("dataForDisplay");
         smallSpinner = (Spinner) findViewById(R.id.spinner);
         largeSpinner = findViewById(R.id.spinner2);
         textView = findViewById(R.id.editText);
@@ -33,7 +32,9 @@ public class TableScreen extends AppCompatActivity{
     }
 
     void organizeLayersArray(){
-        String[] allLayers = dataArray[1].split(",");
+        String stringsWithRemovedFrontBrackets = dataArray[1].replace("[", "");
+        String stringWithRemovedBackBrackets = stringsWithRemovedFrontBrackets.replace("]", "");
+        String[] allLayers = stringWithRemovedBackBrackets.split(",");
         cornLayers = allLayers;
     }
 
