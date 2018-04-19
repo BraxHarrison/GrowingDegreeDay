@@ -1,7 +1,6 @@
 package gdd.harrison.memdust.growingdegreeday;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
 class GDDDataCalculator {
@@ -63,19 +62,19 @@ class GDDDataCalculator {
         return averages;
     }
 
-    protected int getCurrentYear(){
+    int getCurrentYear(){
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
-    protected int getCurrentMonth(){
+    int getCurrentMonth(){
         return Calendar.getInstance().get(Calendar.MONTH);
     }
 
-    protected int getCurrentDayOfMonth(){
+    int getCurrentDayOfMonth(){
         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     }
 
-    protected int calculateDayNumber(int month, int day){
+    int calculateDayNumber(int month, int day){
         int DayNumber = 0;
         for (int i = 1; i <= month; i++){
             if ((i == 1) || (i ==3) || (i ==5) || (i == 7) || (i ==8) || (i ==10) || (i == 12)){
@@ -95,7 +94,7 @@ class GDDDataCalculator {
         return DayNumber;
     }
 
-    protected int determineNumberOfDaysInYear(int currentYear){
+    int determineNumberOfDaysInYear(int currentYear){
         if (isLeapYear(currentYear)) {
             return 366;
         }
@@ -105,7 +104,7 @@ class GDDDataCalculator {
 
     }
 
-    protected boolean isLeapYear(int currentYear) {
+    boolean isLeapYear(int currentYear) {
         return currentYear % 4 == 0 && (currentYear % 100 != 0 || currentYear % 400 == 0);
     }
 
@@ -120,11 +119,11 @@ class GDDDataCalculator {
         return cornLayers;
     }
 
-    double calculateV2Layer(){
+    private double calculateV2Layer(){
         return 105.0 + 168.0;
     }
 
-    double calculateVLayer(double previousV){
+    private double calculateVLayer(double previousV){
         return previousV + 168.0;
     }
 
