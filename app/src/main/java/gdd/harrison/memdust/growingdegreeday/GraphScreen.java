@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
@@ -38,6 +36,7 @@ public class GraphScreen extends AppCompatActivity {
         dataArray = intent.getStringArrayExtra("dataForDisplay");
         graph = findViewById(R.id.graph);
         createLineSeries();
+        buildGraph();
     }
 
 
@@ -124,42 +123,50 @@ public class GraphScreen extends AppCompatActivity {
         currentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                graph.removeAllSeries();
-                graph.setTitle("Current Growing Degree Data and Projections");
-                GridLabelRenderer gridLabelRenderer = graph.getGridLabelRenderer();
-                gridLabelRenderer.setHorizontalAxisTitle("Days since January 1st");
-                gridLabelRenderer.setVerticalAxisTitle("Growing Degree Days");
-                graph.getViewport().setMinX(0);
-                graph.getViewport().setMinY(0);
-                graph.getViewport().setMaxX(380);
-                graph.getViewport().setMaxY(4000);
-                graph.getViewport().setYAxisBoundsManual(true);
-                graph.getViewport().setXAxisBoundsManual(true);
-                graph.addSeries(allDataSeries.get(0));
-                graph.addSeries(allDataSeries.get(2));
-                graph.addSeries(allDataSeries.get(3));
-                graph.addSeries(allDataSeries.get(4));
-                graph.addSeries(allDataSeries.get(5));
+                buildGraph();
             }
         });
+
     }
 
     private void listenForMinTempButton(){
         minTempButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                graph.removeAllSeries();
-                graph.setTitle("Minimum Temperature Measurements");
-                GridLabelRenderer gridLabelRenderer = graph.getGridLabelRenderer();
-                gridLabelRenderer.setHorizontalAxisTitle("Days since January 1st");
-                gridLabelRenderer.setVerticalAxisTitle("Minimum Temperature (°F)");
-                graph.getViewport().setMinX(0);
-                graph.getViewport().setMinY(-30);
-                graph.getViewport().setMaxX(365);
-                graph.getViewport().setMaxY(120);
-                graph.addSeries(allDataSeries.get(1));
+                buildMinGraph();
             }
         });
     }
 
+    protected void buildMinGraph(){
+        graph.removeAllSeries();
+        graph.setTitle("Minimum Temperature Measurements");
+        GridLabelRenderer gridLabelRenderer = graph.getGridLabelRenderer();
+        gridLabelRenderer.setHorizontalAxisTitle("Days since January 1st");
+        gridLabelRenderer.setVerticalAxisTitle("Minimum Temperature (°F)");
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMinY(-30);
+        graph.getViewport().setMaxX(365);
+        graph.getViewport().setMaxY(120);
+        graph.addSeries(allDataSeries.get(1));
+    }
+
+    protected void buildGraph(){
+        graph.removeAllSeries();
+        graph.setTitle("Current Growing Degree Data and Projections");
+        GridLabelRenderer gridLabelRenderer = graph.getGridLabelRenderer();
+        gridLabelRenderer.setHorizontalAxisTitle("Days since January 1st");
+        gridLabelRenderer.setVerticalAxisTitle("Growing Degree Days");
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxX(380);
+        graph.getViewport().setMaxY(4000);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.addSeries(allDataSeries.get(0));
+        graph.addSeries(allDataSeries.get(2));
+        graph.addSeries(allDataSeries.get(3));
+        graph.addSeries(allDataSeries.get(4));
+        graph.addSeries(allDataSeries.get(5));
+    }
 }
