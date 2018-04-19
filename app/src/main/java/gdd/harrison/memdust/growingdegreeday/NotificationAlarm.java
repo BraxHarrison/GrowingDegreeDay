@@ -33,13 +33,13 @@ public class NotificationAlarm extends BroadcastReceiver {
         Log.d("CREATION","Setting alarm...");
         Calendar refCalendar = Calendar.getInstance();
 
-        refCalendar.add(Calendar.SECOND,30);
+        //refCalendar.add(Calendar.SECOND,30);
         Intent intent = new Intent(context, NotificationAlarm.class);
         sender = PendingIntent.getBroadcast(context, 192837,intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (am != null) {
-            am.setInexactRepeating(AlarmManager.RTC_WAKEUP, refCalendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,sender);
+            am.setInexactRepeating(AlarmManager.RTC_WAKEUP, refCalendar.getTimeInMillis(),AlarmManager.INTERVAL_FIFTEEN_MINUTES,sender);
         }
 
     }
