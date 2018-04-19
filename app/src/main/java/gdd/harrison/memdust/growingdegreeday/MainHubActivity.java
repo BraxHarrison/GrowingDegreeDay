@@ -9,6 +9,8 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,8 +37,48 @@ public class MainHubActivity extends AppCompatActivity {
         setUpLatitudeAndLongitude();
         setLatitudeAndLongitude();
         setUpListeners();
+        setUpTextChangedListeners();
         data = organizer.beginRetrievingData();
     }
+
+    protected void setUpTextChangedListeners(){
+        longitude.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                setLatitudeAndLongitude();
+                data = organizer.beginRetrievingData();
+            }
+        });
+    latitude.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            setLatitudeAndLongitude();
+            data = organizer.beginRetrievingData();
+        }
+    });
+
+    }
+
 
     protected void setUpButtons(){
         for (int buttonId : buttonIds) {
@@ -122,9 +164,6 @@ public class MainHubActivity extends AppCompatActivity {
 
     void addCorrectDataNeeded(int i){
         if (i == 1){
-            organizer.setLatitude(latitude.getText().toString());
-            organizer.setLongitude(longitude.getText().toString());
-            String[] data = organizer.beginRetrievingData();
             addOnlySomePartsOfTheData(data);
             dataForGraph[2] = organizer.getBlackLayer();
             dataForGraph[3] = organizer.getSilkLayer();
@@ -133,7 +172,6 @@ public class MainHubActivity extends AppCompatActivity {
             dataForGraph[6] = String.valueOf(organizer.getCurrentDay());
         }
         if (i==2){
-            String[]data = organizer.beginRetrievingData();
             addOnlySomePartsOfTheDataTable(data);
             dataForTable[1] = organizer.getCornStages();
             dataForTable[2] = organizer.getBlackLayer();
