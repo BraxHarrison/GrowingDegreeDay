@@ -67,8 +67,8 @@ class GDDDataOrganizer {
     }
 
 
-    private ArrayList<ArrayList<String>> organizeAccumulatedGDDs(String[] accumulatedData){
-        ArrayList<ArrayList<String>> listOfYears = new ArrayList<>();
+    private ArrayList<ArrayList<Double>> organizeAccumulatedGDDs(String[] accumulatedData){
+        ArrayList<ArrayList<Double>> listOfYears = new ArrayList<>();
         int yearIndex = 0;
         int currentYear = calculator.getCurrentYear();
         if (calculator.isLeapYear(currentYear)){
@@ -88,46 +88,46 @@ class GDDDataOrganizer {
         return listOfYears;
     }
 
-    private ArrayList<ArrayList<String>> organizeModels(String[] modelData, int dayNumber){
-        ArrayList<ArrayList<String>> listOfModels = new ArrayList<>();
+    private ArrayList<ArrayList<Double>> organizeModels(String[] modelData, int dayNumber){
+        ArrayList<ArrayList<Double>> listOfModels = new ArrayList<>();
         int modelBeginIndex = 0;
         for (int i = 0; i < modelData.length/dayNumber; i++){
-            ArrayList<String> singleModel = new ArrayList<>();
-            singleModel.addAll(Arrays.asList(modelData).subList(modelBeginIndex, modelBeginIndex + dayNumber));
-            System.out.println(singleModel);
+            ArrayList<Double> singleModel = new ArrayList<>();
+            for (int j = modelBeginIndex; j < modelData.length; j++){
+                singleModel.add(Double.parseDouble(modelData[modelBeginIndex]));
+            }
             modelBeginIndex = modelBeginIndex + dayNumber;
             listOfModels.add(singleModel);
         }
         return listOfModels;
     }
 
-    private ArrayList<String> getCorrectIndicesForNonLeapYear(String[] accumulatedData, int yearBeginIndex, int yearEndIndex){
-        ArrayList<String> dataForSingleYear = new ArrayList<>();
+    private ArrayList<Double> getCorrectIndicesForNonLeapYear(String[] accumulatedData, int yearBeginIndex, int yearEndIndex){
+        ArrayList<Double> dataForSingleYear = new ArrayList<>();
         int numberOfDaysInYear = yearEndIndex - yearBeginIndex;
         for (int i = 0; i < numberOfDaysInYear; i++){
             if ((numberOfDaysInYear == 366) && (i >= 59)){
-                dataForSingleYear.add(accumulatedData[i-1]);
+                dataForSingleYear.add(Double.parseDouble(accumulatedData[i-1]));
             }
             else{
-                dataForSingleYear.add(accumulatedData[i]);
+                dataForSingleYear.add(Double.parseDouble(accumulatedData[i]));
             }
-
         }
         return dataForSingleYear;
     }
 
-    private ArrayList<String> getCorrectIndicesForLeapYear(String[] accumulatedData, int yearBeginIndex, int yearEndIndex){
-        ArrayList<String> dataForSingleYear = new ArrayList<>();
+    private ArrayList<Double> getCorrectIndicesForLeapYear(String[] accumulatedData, int yearBeginIndex, int yearEndIndex){
+        ArrayList<Double> dataForSingleYear = new ArrayList<>();
         int numberOfDaysInYear = yearEndIndex - yearBeginIndex;
         for (int i = 0; i < numberOfDaysInYear + 1; i++){
             if (i == 59){
-                dataForSingleYear.add(accumulatedData[i-1]);
+                dataForSingleYear.add(Double.parseDouble(accumulatedData[i-1]));
             }
             else if(i > 59){
-                dataForSingleYear.add(accumulatedData[i-1]);
+                dataForSingleYear.add(Double.parseDouble(accumulatedData[i-1]));
             }
             else{
-                dataForSingleYear.add(accumulatedData[i]);
+                dataForSingleYear.add(Double.parseDouble(accumulatedData[i]));
             }
         }
         return dataForSingleYear;

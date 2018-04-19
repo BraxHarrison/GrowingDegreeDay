@@ -19,7 +19,7 @@ class GDDDataCalculator {
         return (11.459*maturityValue) +100.27;
     }
 
-    ArrayList<Double> calculateGDDProjection(ArrayList<ArrayList<String>> accumulatedData, ArrayList<ArrayList<String>> listOfAllModels, double currentDayData){
+    ArrayList<Double> calculateGDDProjection(ArrayList<ArrayList<Double>> accumulatedData, ArrayList<ArrayList<Double>> listOfAllModels, double currentDayData){
         int month = getCurrentMonth();
         int dayOfMonth = getCurrentDayOfMonth();
         int dayNumber = calculateDayNumber(month, dayOfMonth);
@@ -27,8 +27,8 @@ class GDDDataCalculator {
         ArrayList<Double> gddProjection = new ArrayList<>();
         int modelNumber = 0;
         Double[] gddForecast = new Double[listOfAllModels.size()];
-        for(ArrayList<String> s : listOfAllModels){
-            gddForecast[modelNumber]= Double.parseDouble(s.get(dayNumber-2));
+        for(ArrayList<Double> s : listOfAllModels){
+            gddForecast[modelNumber]= s.get(dayNumber-2);
             modelNumber++;
             }
         gddProjection.add(calculateModelAverage(gddForecast, currentDayData));
@@ -50,12 +50,12 @@ class GDDDataCalculator {
         return lastDataDay + amountOfChange;
     }
 
-    ArrayList<Double> calculateTotalGDDAverage(ArrayList<ArrayList<String>> listOfAllYears) {
+    ArrayList<Double> calculateTotalGDDAverage(ArrayList<ArrayList<Double>> listOfAllYears) {
         ArrayList<Double> averages = new ArrayList<>();
         for (int j = 0; j < listOfAllYears.get(0).size() - 1; j++){
             double sumOfAllYearsOnSingleDay = 0;
             for (int i = 0; i < listOfAllYears.size(); i++){
-                sumOfAllYearsOnSingleDay = sumOfAllYearsOnSingleDay + Double.parseDouble(listOfAllYears.get(i).get(j));
+                sumOfAllYearsOnSingleDay = sumOfAllYearsOnSingleDay + listOfAllYears.get(i).get(j);
             }
             averages.add(sumOfAllYearsOnSingleDay/listOfAllYears.size());
         }
