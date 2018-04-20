@@ -22,7 +22,7 @@ public class MainHubActivity extends AppCompatActivity {
     ArrayList<Button> buttonList = new ArrayList<>();
     GDDDataOrganizer organizer = new GDDDataOrganizer();
     String[] dataForGraph = new String[8];
-    String[] dataForTable = new String[4];
+    String[] dataForTable = new String[6];
     int[] buttonIds = new int[]{R.id.mapButton, R.id.graphButton, R.id.tableButton, R.id.settingsButton, R.id.getLocation};
     Class[] classList = new Class[]{MapScreen.class, GraphScreen.class, TableScreen.class, SettingsScreenActivity.class};
     TextView latitude;
@@ -186,6 +186,8 @@ public class MainHubActivity extends AppCompatActivity {
             dataForTable[1] = organizer.getCornStages();
             dataForTable[2] = organizer.getBlackLayer();
             dataForTable[3] = organizer.getSilkLayer();
+            dataForTable[4] = organizer.getAccumulatedAverage();
+            dataForTable[5] = organizer.getCurrentData();
         }
     }
 

@@ -45,6 +45,10 @@ class GDDDataOrganizer {
         return Arrays.toString(calculator.calculateCornLayers());
     }
 
+    String getCurrentData(){
+        return fetchedData[0];
+    }
+
     String getAccumulatedAverage(){
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
         return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(organizeAccumulatedData(accumulatedDataIntoArray))));

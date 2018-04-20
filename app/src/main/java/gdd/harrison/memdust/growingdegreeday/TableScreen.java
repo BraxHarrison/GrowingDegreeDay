@@ -1,11 +1,14 @@
 package gdd.harrison.memdust.growingdegreeday;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,8 +30,36 @@ public class TableScreen extends AppCompatActivity{
         smallSpinner = (Spinner) findViewById(R.id.spinner);
         largeSpinner = findViewById(R.id.spinner2);
         textView = findViewById(R.id.editText);
+        generateDateStringsForDisplay();
+        generateAccumulatedDataForDisplay();
         listenForFirstSpinner();
         organizeLayersArray();
+    }
+
+    protected void generateAccumulatedDataForDisplay(){
+        String[] splitData = dataArray[5].split(" ");
+        for (int i = 0; i < splitData.length; i++){
+            LinearLayout dateLayout = this.findViewById(R.id.customList);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+            TextView tv = new TextView(this);
+            tv.setLayoutParams(layoutParams);
+            tv.setText(splitData[i]);
+            dateLayout.addView(tv);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    void generateDateStringsForDisplay(){
+        GDDDataCalculator calendarCalc = new GDDDataCalculator();
+        for (int i = 1; i <= 365; i++){
+            int[] currentMonthAndDay = calendarCalc.calculateMonthAndDayGivenADay(i);
+            LinearLayout dateLayout = this.findViewById(R.id.dateList);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+            TextView tv = new TextView(this);
+            tv.setLayoutParams(layoutParams);
+            tv.setText(currentMonthAndDay[0] + "/"+currentMonthAndDay[1] + "/" + calendarCalc.getCurrentYear());
+            dateLayout.addView(tv);
+        }
     }
 
     void organizeLayersArray(){

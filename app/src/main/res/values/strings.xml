@@ -28,6 +28,7 @@
     <string name="corn_maturity_days">Corn Maturity Days:</string>
     <string name="freeze_temperature">Freeze Temperature:</string>
     <string name="save_settings">Save Settings</string>
+    <string name="testString">test</string>
     <string-array name="Months">
         <item>January</item>
         <item>February</item>
@@ -165,7 +166,6 @@
     </string-array>
     <string-array name="accumulatedDetails">
         <item>Accumulated GDD</item>
-        <item>GDD Per Day</item>
         <item>Vegetation Stage</item>
     </string-array>
 </resources>

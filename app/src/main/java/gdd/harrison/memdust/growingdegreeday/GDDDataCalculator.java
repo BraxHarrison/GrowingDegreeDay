@@ -113,6 +113,29 @@ class GDDDataCalculator {
         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     }
 
+    int[] calculateMonthAndDayGivenADay(int dayOfYear){
+        int[] daysInMonth;
+        int[] monthAndDay = new int[2];
+        if (isLeapYear(getCurrentYear())){
+            daysInMonth = new int[]{31,29,31,30,31,30,31,31,30,31,30,31};
+        }
+        else{
+            daysInMonth = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
+        }
+        int currentDayMonthCount = dayOfYear;
+        for (int i = 0; i<daysInMonth.length; i++){
+            if (currentDayMonthCount <= daysInMonth[i]){
+                monthAndDay[0] = i + 1;
+                monthAndDay[1] = currentDayMonthCount;
+                return monthAndDay;
+            }
+            else{
+                currentDayMonthCount = currentDayMonthCount - daysInMonth[i];
+            }
+        }
+        return monthAndDay;
+    }
+
     int calculateDayNumber(int month, int day){
         int DayNumber = 0;
         for (int i = 1; i <= month; i++){
@@ -132,6 +155,8 @@ class GDDDataCalculator {
         DayNumber = DayNumber + day;
         return DayNumber;
     }
+
+
 
     int determineNumberOfDaysInYear(int currentYear){
         if (isLeapYear(currentYear)) {
