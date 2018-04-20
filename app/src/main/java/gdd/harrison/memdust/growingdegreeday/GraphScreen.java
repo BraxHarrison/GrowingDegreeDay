@@ -9,22 +9,20 @@ import android.widget.Button;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class GraphScreen extends AppCompatActivity {
 
     GraphView graph;
     String[] dataArray;
     ArrayList<LineGraphSeries> allDataSeries = new ArrayList<>();
+    BarGraphSeries barGraphSeries;
     Button currentButton;
     Button minTempButton;
-    List<Date> dateList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class GraphScreen extends AppCompatActivity {
     }
 
     public void createLineSeries() {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             if ((i == 2) || (i == 3)){
                 LineGraphSeries<DataPoint> horizontalLineSeries = new LineGraphSeries<>(createHorizontalLine(dataArray[i]));
                 if (i == 2){
@@ -78,6 +76,10 @@ public class GraphScreen extends AppCompatActivity {
                 series.setTitle("GDD projection");
                 allDataSeries.add(series);
                 series.setColor(Color.rgb(0, 100, 0));
+            }
+            else if (i ==6){
+                barGraphSeries = new BarGraphSeries<>(parseData(dataArray[i]));
+
             }
             else {
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dataArray[i]));
@@ -153,7 +155,7 @@ public class GraphScreen extends AppCompatActivity {
         graph.getViewport().setMinY(-30);
         graph.getViewport().setMaxX(365);
         graph.getViewport().setMaxY(120);
-        graph.addSeries(allDataSeries.get(1));
+        graph.addSeries(barGraphSeries);
     }
 
     protected void buildGraph(){

@@ -1,6 +1,7 @@
 package gdd.harrison.memdust.growingdegreeday;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 class GDDDataCalculator {
@@ -17,6 +18,44 @@ class GDDDataCalculator {
 
     double calculateSilkLayer(double maturityValue){
         return (11.459*maturityValue) +100.27;
+    }
+
+    ArrayList<Integer> combineFreezeDataArraysForEntireYear(ArrayList<ArrayList<Double>> accumulatedFreezeData, int freezingTemperature){
+        int[] firstFreeze = createFirstFreezeDataArray(accumulatedFreezeData,freezingTemperature);
+        int[] lastFreeze = createLastFreezeDataArray(accumulatedFreezeData,freezingTemperature);
+        System.out.println(Arrays.toString(firstFreeze));
+        ArrayList<Integer> combinedFreezes = new ArrayList<>();
+        for (int i = 0; i < firstFreeze.length; i++){
+            combinedFreezes.add(firstFreeze[i]+lastFreeze[i]);
+        }
+        return combinedFreezes;
+    }
+
+    int[] createFirstFreezeDataArray(ArrayList<ArrayList<Double>> accumulatedFreezeData, int freezingTemperature){
+        int[] firstFreezeDayCounts = new int[determineNumberOfDaysInYear(getCurrentYear())];
+        for(int j = 0; j < accumulatedFreezeData.size();j++) {
+            for (int i = 231; i < firstFreezeDayCounts.length; i++) {
+                System.out.println(accumulatedFreezeData.get(j).get(i));
+                if (accumulatedFreezeData.get(j).get(i) <= freezingTemperature) {
+                    firstFreezeDayCounts[i]++;
+                    break;
+                }
+            }
+        }
+        return firstFreezeDayCounts;
+    }
+
+    int[] createLastFreezeDataArray(ArrayList<ArrayList<Double>> accumulatedFreezeData, double freezingTemperature){
+        int[] lastFreezeDayCounts = new int[determineNumberOfDaysInYear(getCurrentYear())];
+        for (ArrayList<Double> singleYearFreezeData: accumulatedFreezeData){
+            boolean foundLastFreezeAlready = false;
+            for (int i = 230; i >= 0; i--){
+                if ((singleYearFreezeData.get(i) <= freezingTemperature) && (!foundLastFreezeAlready)){
+                    foundLastFreezeAlready = true;
+                }
+            }
+        }
+        return lastFreezeDayCounts;
     }
 
     ArrayList<Double> calculateGDDProjection(ArrayList<ArrayList<Double>> accumulatedData, ArrayList<ArrayList<Double>> listOfAllModels, double currentDayData){
@@ -101,7 +140,6 @@ class GDDDataCalculator {
         else{
             return 365;
         }
-
     }
 
     boolean isLeapYear(int currentYear) {

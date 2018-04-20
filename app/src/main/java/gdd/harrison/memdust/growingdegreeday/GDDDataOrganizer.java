@@ -15,7 +15,7 @@ class GDDDataOrganizer {
 
     private void buildURLs(){
         URLs[0] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetCurrentData=1&lat=" + latitude +"&long=" +longitude;
-        URLs[1] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetMinData=1&lat=" + latitude +"&long=" +longitude;
+        URLs[1] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetMinimumPreviousData=1&lat=" + latitude +"&long=" +longitude;
         URLs[2] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetAllData=1&lat=" + latitude +"&long=" +longitude;
         URLs[3] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetForecastData=1&lat=" + latitude +"&long=" +longitude;
     }
@@ -47,7 +47,7 @@ class GDDDataOrganizer {
 
     String getAccumulatedAverage(){
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
-        return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(organizeAccumulatedGDDs(accumulatedDataIntoArray))));
+        return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(organizeAccumulatedData(accumulatedDataIntoArray))));
     }
 
 
@@ -55,11 +55,16 @@ class GDDDataOrganizer {
         String[] accumulatedModels = fetchedData[3].split(" ");
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
         String[] accumulatedCurrentData = fetchedData[0].split(" ");
-        String gddProjection = removeExcessCharacters(String.valueOf(calculator.calculateGDDProjection(organizeAccumulatedGDDs(accumulatedDataIntoArray),
+        String gddProjection = removeExcessCharacters(String.valueOf(calculator.calculateGDDProjection(organizeAccumulatedData(accumulatedDataIntoArray),
                 organizeModels(accumulatedModels, calculator.calculateDayNumber(calculator.getCurrentMonth(), calculator.getCurrentDayOfMonth())),
                 Double.parseDouble(accumulatedCurrentData[accumulatedCurrentData.length-1]))));
         currentDay = calculator.getModelDay();
         return gddProjection;
+    }
+
+    String getFreezeData(){
+        String[] accumulatedMinTemps = fetchedData[1].split(" ");
+        return removeExcessCharacters(String.valueOf(calculator.combineFreezeDataArraysForEntireYear(organizeAccumulatedData(accumulatedMinTemps),32)));
     }
 
     int getCurrentDay(){
@@ -67,7 +72,7 @@ class GDDDataOrganizer {
     }
 
 
-    private ArrayList<ArrayList<Double>> organizeAccumulatedGDDs(String[] accumulatedData){
+    private ArrayList<ArrayList<Double>> organizeAccumulatedData(String[] accumulatedData){
         ArrayList<ArrayList<Double>> listOfYears = new ArrayList<>();
         int yearIndex = 0;
         int currentYear = calculator.getCurrentYear();

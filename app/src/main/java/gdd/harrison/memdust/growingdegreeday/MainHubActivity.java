@@ -21,7 +21,7 @@ public class MainHubActivity extends AppCompatActivity {
 
     ArrayList<Button> buttonList = new ArrayList<>();
     GDDDataOrganizer organizer = new GDDDataOrganizer();
-    String[] dataForGraph = new String[7];
+    String[] dataForGraph = new String[8];
     String[] dataForTable = new String[4];
     int[] buttonIds = new int[]{R.id.mapButton, R.id.graphButton, R.id.tableButton, R.id.settingsButton, R.id.getLocation};
     Class[] classList = new Class[]{MapScreen.class, GraphScreen.class, TableScreen.class, SettingsScreenActivity.class};
@@ -179,6 +179,7 @@ public class MainHubActivity extends AppCompatActivity {
             dataForGraph[4] = organizer.getAccumulatedAverage();
             dataForGraph[5] = organizer.getGDDProjection();
             dataForGraph[6] = String.valueOf(organizer.getCurrentDay());
+            dataForGraph[7] = organizer.getFreezeData();
         }
         if (i==2){
             addOnlySomePartsOfTheDataTable(data);
