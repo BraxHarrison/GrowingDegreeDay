@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class MapScreen extends FragmentActivity implements OnMapReadyCallback {
+public class MapScreen extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnCameraMoveStartedListener {
 
     private GoogleMap mMap;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
@@ -208,13 +208,17 @@ public class MapScreen extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private void InitMap() {
-        LatLng loc = new LatLng(40.1934,-85.3864);
+        LatLng loc = new LatLng(42.150,-91.424);
         if(mLastLocation!=null){
             loc = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
         }
         getLocString(loc);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,4.25f));
+        mMap.setMinZoomPreference(4.25f);
+        setMapLimits();
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -222,6 +226,28 @@ public class MapScreen extends FragmentActivity implements OnMapReadyCallback {
             }
         });
     }
+
+    private void setMapLimits() {
+//        mMap.setOnCameraMoveListener(new );
+    }
+
+   @Override
+    public void onCameraMoveStarted(int reason){
+//        if (reason == OnCameraMoveStartedListener.REASON_GESTURE) {
+//            Toast.makeText(this, "The user gestured on the map.",
+//                    Toast.LENGTH_SHORT).show();
+//        } else if (reason == OnCameraMoveStartedListener
+//                .REASON_API_ANIMATION) {
+//            Toast.makeText(this, "The user tapped something on the map.",
+//                    Toast.LENGTH_SHORT).show();
+//        } else if (reason == OnCameraMoveStartedListener
+//                .REASON_DEVELOPER_ANIMATION) {
+//            Toast.makeText(this, "The app moved the camera.",
+//                    Toast.LENGTH_SHORT).show();
+//        }
+   }
+
+
 
     public void getLocString(LatLng latLng){
         mMap.clear();
