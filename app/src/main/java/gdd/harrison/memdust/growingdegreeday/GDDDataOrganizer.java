@@ -1,7 +1,10 @@
 package gdd.harrison.memdust.growingdegreeday;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 class GDDDataOrganizer {
 
@@ -153,6 +156,29 @@ class GDDDataOrganizer {
             System.out.println("There was an exception in trying to get the data asynchronously.");
         }
         return result;
+    }
+
+    public String getCurrentData(){
+        String[] mostRecentGDD = fetchedData[0].split(" ");
+        return mostRecentGDD[mostRecentGDD.length-1];
+    }
+
+    public HashMap<String,Integer> getAllCornStages(){
+        String[] vStages = getCornStages().split(" ");
+        HashMap<String,Integer> allCornStages = new HashMap<>();
+        for(int i = 0; i<vStages.length;i++){
+            vStages[i] = vStages[i].replace("[","");
+            vStages[i] = vStages[i].replace(",","");
+            vStages[i] = vStages[i].replace("]","");
+        }
+        allCornStages.put("v2",Math.round(Float.parseFloat(vStages[0])));
+        allCornStages.put("v4",Math.round(Float.parseFloat(vStages[1])));
+        allCornStages.put("v6",Math.round(Float.parseFloat(vStages[2])));
+        allCornStages.put("v8",Math.round(Float.parseFloat(vStages[3])));
+        allCornStages.put("v10",Math.round(Float.parseFloat(vStages[4])));
+        allCornStages.put("silking",Math.round(Float.parseFloat(getSilkLayer())));
+        allCornStages.put("black",Math.round(Float.parseFloat(getBlackLayer())));
+        return allCornStages;
     }
 
 

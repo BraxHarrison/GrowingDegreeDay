@@ -3,6 +3,7 @@ package gdd.harrison.memdust.growingdegreeday;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -101,7 +102,7 @@ public class MainHubActivity extends AppCompatActivity {
     private double[] checkLocationData() {
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        double[] latlongPair = new double[2];
+        double[] latLongPair = new double[2];
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -110,12 +111,23 @@ public class MainHubActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return latlongPair;
+            return latLongPair;
         }
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        latlongPair[0] = location.getLongitude();
-        latlongPair[1] = location.getLatitude();
-        return latlongPair;
+        latLongPair[0] = location.getLongitude();
+        latLongPair[1] = location.getLatitude();
+        setLatLongInPrefs(latLongPair);
+        return latLongPair;
+    }
+
+    private void setLatLongInPrefs(double[] latlongPair) {
+        SharedPreferences prefs = getSharedPreferences("gdd.PREFS",0);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+
+        prefsEditor.putString("currLatitude",latlongPair[0] + "");
+        prefsEditor.putString("currLongiude", latlongPair[1]+"");
+
+        prefsEditor.apply();
     }
 
     protected void setLatitudeAndLongitude(){

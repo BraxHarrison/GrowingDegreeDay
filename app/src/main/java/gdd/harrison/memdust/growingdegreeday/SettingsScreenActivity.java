@@ -31,6 +31,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
     Context context;
     NotificationAlarm freezeChecker;
     SharedPreferences savedPrefs;
+    GDDDataOrganizer gDO = new GDDDataOrganizer();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,8 @@ public class SettingsScreenActivity extends AppCompatActivity {
         setUpSettingsButton();
         loadSettings();
     }
+
+
 
     protected void getPrefs(){
         savedPrefs = getSharedPreferences("gdd.PREFS",0);

@@ -40,6 +40,8 @@ class GDDDataCalculator {
         return gddProjection;
         }
 
+        //If above or equal to
+
 
     private double calculateModelAverage(Double[] forecast, double lastDataDay) {
         double sum = 0;
