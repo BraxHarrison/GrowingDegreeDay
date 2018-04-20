@@ -112,9 +112,18 @@ public class MainHubActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return latlongPair;
         }
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        latlongPair[0] = location.getLongitude();
-        latlongPair[1] = location.getLatitude();
+        Location location;
+        if (lm != null) {
+            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location!= null){
+                latlongPair[0] = location.getLongitude();
+                latlongPair[1] = location.getLatitude();
+            }
+            else{
+                latlongPair[0] = -85.3864;
+                latlongPair[1] = 40.116;
+            }
+        }
         return latlongPair;
     }
 

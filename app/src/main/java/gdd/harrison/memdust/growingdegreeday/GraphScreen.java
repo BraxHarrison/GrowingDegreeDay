@@ -2,16 +2,20 @@ package gdd.harrison.memdust.growingdegreeday;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class GraphScreen extends AppCompatActivity {
 
@@ -20,6 +24,7 @@ public class GraphScreen extends AppCompatActivity {
     ArrayList<LineGraphSeries> allDataSeries = new ArrayList<>();
     Button currentButton;
     Button minTempButton;
+    List<Date> dateList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +164,7 @@ public class GraphScreen extends AppCompatActivity {
         gridLabelRenderer.setVerticalAxisTitle("Growing Degree Days");
         graph.getViewport().setMinX(0);
         graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxX(380);
+        graph.getViewport().setMaxX(366);
         graph.getViewport().setMaxY(4000);
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setXAxisBoundsManual(true);
@@ -169,4 +174,5 @@ public class GraphScreen extends AppCompatActivity {
         graph.addSeries(allDataSeries.get(4));
         graph.addSeries(allDataSeries.get(5));
     }
+
 }
