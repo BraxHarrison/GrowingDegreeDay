@@ -40,7 +40,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".GraphScreen" />
-        <activity android:name=".OnlineDataTestActivity" />
         <activity android:name=".SettingsScreenActivity" />
         <activity android:name=".TableScreen" />
         <receiver
