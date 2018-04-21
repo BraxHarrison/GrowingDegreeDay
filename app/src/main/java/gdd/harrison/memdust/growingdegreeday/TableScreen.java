@@ -20,6 +20,7 @@ public class TableScreen extends AppCompatActivity{
     Spinner largeSpinner;
     TextView textView;
     String[] cornLayers;
+    LinearLayout changingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,21 +31,38 @@ public class TableScreen extends AppCompatActivity{
         smallSpinner = (Spinner) findViewById(R.id.spinner);
         largeSpinner = findViewById(R.id.spinner2);
         textView = findViewById(R.id.editText);
+        changingList = this.findViewById(R.id.customList);
         generateDateStringsForDisplay();
         generateAccumulatedDataForDisplay();
+        generateAverageGDDDataForDisplay();
         listenForFirstSpinner();
+        listenForSecondSpinner();
         organizeLayersArray();
     }
 
-    protected void generateAccumulatedDataForDisplay(){
-        String[] splitData = dataArray[5].split(" ");
+    protected void generateAverageGDDDataForDisplay(){
+        String[] splitData = dataArray[4].split(", ");
         for (int i = 0; i < splitData.length; i++){
-            LinearLayout dateLayout = this.findViewById(R.id.customList);
+            LinearLayout averageLayout = this.findViewById(R.id.avgList);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
             TextView tv = new TextView(this);
             tv.setLayoutParams(layoutParams);
             tv.setText(splitData[i]);
-            dateLayout.addView(tv);
+            averageLayout.addView(tv);
+        }
+    }
+
+    protected void generateAccumulatedDataForDisplay(){
+        String[] splitData = dataArray[5].split(" ");
+        if(changingList.getChildCount() > 0){
+            changingList.removeAllViews();
+        }
+        for (int i = 0; i < splitData.length; i++){
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+            TextView tv = new TextView(this);
+            tv.setLayoutParams(layoutParams);
+            tv.setText(splitData[i]);
+            changingList.addView(tv);
         }
     }
 
@@ -67,6 +85,34 @@ public class TableScreen extends AppCompatActivity{
         String stringWithRemovedBackBrackets = stringsWithRemovedFrontBrackets.replace("]", "");
         String[] allLayers = stringWithRemovedBackBrackets.split(",");
         cornLayers = allLayers;
+    }
+
+    protected void generateVegetationStagesForDisplay(){
+        if(changingList.getChildCount() > 0){
+            changingList.removeAllViews();
+        }
+
+    }
+
+    void listenForSecondSpinner(){
+        largeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:
+                        generateAccumulatedDataForDisplay();
+                        break;
+                    case 1:
+                        generateVegetationStagesForDisplay();
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView){
+
+            }
+        });
     }
 
     void listenForFirstSpinner(){

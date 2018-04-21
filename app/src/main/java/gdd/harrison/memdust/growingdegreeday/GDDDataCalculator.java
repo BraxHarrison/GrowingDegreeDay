@@ -190,4 +190,6 @@ class GDDDataCalculator {
         return previousV + 168.0;
     }
 
+
+
 }

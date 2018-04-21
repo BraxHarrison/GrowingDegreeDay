@@ -22,7 +22,7 @@ public class MainHubActivity extends AppCompatActivity {
     ArrayList<Button> buttonList = new ArrayList<>();
     GDDDataOrganizer organizer = new GDDDataOrganizer();
     String[] dataForGraph = new String[8];
-    String[] dataForTable = new String[6];
+    String[] dataForTable = new String[7];
     int[] buttonIds = new int[]{R.id.mapButton, R.id.graphButton, R.id.tableButton, R.id.settingsButton, R.id.getLocation};
     Class[] classList = new Class[]{MapScreen.class, GraphScreen.class, TableScreen.class, SettingsScreenActivity.class};
     TextView latitude;
