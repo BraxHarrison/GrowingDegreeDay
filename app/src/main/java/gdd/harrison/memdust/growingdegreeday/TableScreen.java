@@ -21,6 +21,7 @@ public class TableScreen extends AppCompatActivity{
     TextView textView;
     String[] cornLayers;
     LinearLayout changingList;
+    TextView customHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class TableScreen extends AppCompatActivity{
         largeSpinner = findViewById(R.id.spinner2);
         textView = findViewById(R.id.editText);
         changingList = this.findViewById(R.id.customList);
+        customHeader = findViewById(R.id.customHeader);
         generateDateStringsForDisplay();
         generateAccumulatedDataForDisplay();
         generateAverageGDDDataForDisplay();
@@ -52,8 +54,10 @@ public class TableScreen extends AppCompatActivity{
         }
     }
 
+
     protected void generateAccumulatedDataForDisplay(){
         String[] splitData = dataArray[5].split(" ");
+        customHeader.setText(R.string.Acc_GDD);
         if(changingList.getChildCount() > 0){
             changingList.removeAllViews();
         }
@@ -83,13 +87,21 @@ public class TableScreen extends AppCompatActivity{
     void organizeLayersArray(){
         String stringsWithRemovedFrontBrackets = dataArray[1].replace("[", "");
         String stringWithRemovedBackBrackets = stringsWithRemovedFrontBrackets.replace("]", "");
-        String[] allLayers = stringWithRemovedBackBrackets.split(",");
-        cornLayers = allLayers;
+        cornLayers = stringWithRemovedBackBrackets.split(",");
     }
 
     protected void generateVegetationStagesForDisplay(){
+        String[] stages = dataArray[6].split(",");
+        customHeader.setText(R.string.vegetation_stage);
         if(changingList.getChildCount() > 0){
             changingList.removeAllViews();
+        }
+        for (int i = 0; i < stages.length; i++) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+            TextView tv = new TextView(this);
+            tv.setLayoutParams(layoutParams);
+            tv.setText(stages[i]);
+            changingList.addView(tv);
         }
 
     }

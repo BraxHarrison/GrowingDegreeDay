@@ -190,6 +190,29 @@ class GDDDataCalculator {
         return previousV + 168.0;
     }
 
-
+    protected String[] calculateLayerGivenListOfGDDs(double[] GDDs, double maturityValue) {
+        String[] listOfLayersWithRespectToGDD = new String[GDDs.length];
+        for (int i = 0; i < GDDs.length; i++) {
+            if ((GDDs[i] >= calculateV2Layer()) && (GDDs[i] < calculateVLayer(calculateV2Layer()))) {
+                listOfLayersWithRespectToGDD[i] = "V2";
+            } else if ((GDDs[i] >= calculateVLayer(calculateV2Layer())) && (GDDs[i] < calculateVLayer(calculateV2Layer() + 168.0))) {
+                listOfLayersWithRespectToGDD[i] = "V4";
+            } else if ((GDDs[i] >= calculateVLayer(calculateV2Layer() + 168.0)) && (GDDs[i] < calculateVLayer(calculateV2Layer() + (2.0 * 168.0)))) {
+                listOfLayersWithRespectToGDD[i] = "V6";
+            } else if ((GDDs[i] >= calculateVLayer(calculateV2Layer() + (2.0 * 168.0))) && (GDDs[i] < calculateVLayer(calculateV2Layer() + (3.0 * 168.0)))) {
+                listOfLayersWithRespectToGDD[i] = "V8";
+            } else if ((GDDs[i] >= calculateVLayer(calculateV2Layer() + (3.0 * 168.0))) && (GDDs[i] < calculateSilkLayer(maturityValue))) {
+                listOfLayersWithRespectToGDD[i] = "V10";
+            } else if ((GDDs[i] >= calculateSilkLayer(maturityValue)) && (GDDs[i] < calculateBlackLayer(maturityValue))) {
+                listOfLayersWithRespectToGDD[i] = "Silking Layer";
+            } else if ((GDDs[i] >= calculateBlackLayer(maturityValue))) {
+                listOfLayersWithRespectToGDD[i] = "Black Layer";
+            }
+            else{
+                listOfLayersWithRespectToGDD[i] = "";
+            }
+        }
+        return listOfLayersWithRespectToGDD;
+    }
 
 }

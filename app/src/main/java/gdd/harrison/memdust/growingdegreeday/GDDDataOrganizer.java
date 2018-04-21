@@ -49,6 +49,15 @@ class GDDDataOrganizer {
         return fetchedData[0];
     }
 
+    String getCurrentLayerOfData(){
+        String[] projection = getGDDProjection().split(",");
+        double[] doubleProjection = new double[projection.length];
+        for (int i = 0; i < projection.length; i++){
+            doubleProjection[i] = Double.parseDouble(projection[i]);
+        }
+        return removeExcessCharacters(Arrays.toString(calculator.calculateLayerGivenListOfGDDs(doubleProjection, maturityValue)));
+    }
+
     String getAccumulatedAverage(){
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
         return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(organizeAccumulatedData(accumulatedDataIntoArray))));

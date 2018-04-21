@@ -29,6 +29,8 @@
     <string name="freeze_temperature">Freeze Temperature:</string>
     <string name="save_settings">Save Settings</string>
     <string name="testString">test</string>
+    <string name="vegetation_stage">Vegetation Stage</string>
+    <string name="Acc_GDD">Acc GDD</string>
     <string-array name="Months">
         <item>January</item>
         <item>February</item>

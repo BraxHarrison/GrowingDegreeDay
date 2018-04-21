@@ -188,6 +188,7 @@ public class MainHubActivity extends AppCompatActivity {
             dataForTable[3] = organizer.getSilkLayer();
             dataForTable[4] = organizer.getAccumulatedAverage();
             dataForTable[5] = organizer.getCurrentData();
+            dataForTable[6] = organizer.getCurrentLayerOfData();
         }
     }
 
