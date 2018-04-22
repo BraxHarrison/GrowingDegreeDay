@@ -2,6 +2,7 @@ package gdd.harrison.memdust.growingdegreeday;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,6 +12,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -42,17 +46,37 @@ public class MapScreen extends FragmentActivity implements OnMapReadyCallback, G
     private GDDDataOrganizer selectedLocation;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
+    LatLng chosenLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         initAPI();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
+        setUpSetLocButton();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         context = getApplicationContext();
+    }
+
+    private void setUpSetLocButton() {
+        Button button = findViewById(R.id.saveLocButton);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("CREATION", "chosen location: " + chosenLocation.latitude + " " + chosenLocation.longitude);
+                SharedPreferences prefs = getSharedPreferences("gdd.PREFS",0);
+                SharedPreferences.Editor prefsEdit = prefs.edit();
+                prefsEdit.putString("currLatitude", chosenLocation.latitude+"");
+                prefsEdit.putString("currLongitude", chosenLocation.longitude+"");
+                prefsEdit.apply();
+                finish();
+
+            }
+        });
     }
 
     @Override
@@ -261,7 +285,7 @@ public class MapScreen extends FragmentActivity implements OnMapReadyCallback, G
         }
         Marker customMarker = mMap.addMarker(new MarkerOptions().position(latLng).title(addresses.get(0).getLocality() + " " + latLng.toString()));
         customMarker.showInfoWindow();
-        LatLng nearestLocLatLong = new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude());
+        chosenLocation = new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude());
     }
 
 
