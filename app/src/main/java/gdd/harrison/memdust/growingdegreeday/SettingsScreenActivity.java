@@ -143,7 +143,7 @@ public class SettingsScreenActivity extends AppCompatActivity {
 
 
         prefEdit.putInt("monthSpinner",monthSpin.getSelectedItemPosition());
-        prefEdit.putInt("monthSpinnerVal",monthSpin.getSelectedItemPosition());
+        prefEdit.putString("monthSpinnerVal",monthSpin.getSelectedItem().toString());
         prefEdit.putInt("cornMaturityDaysSpinner",cornMatSpin.getSelectedItemPosition());
         prefEdit.putInt("cornMaturityDaysSpinnerVal",Integer.parseInt(cornMatSpin.getSelectedItem().toString()));
         prefEdit.putInt("dayOfMonthSpinner",daySpin.getSelectedItemPosition());

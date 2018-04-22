@@ -41,6 +41,10 @@ public class MainHubActivity extends AppCompatActivity {
         setLatitudeAndLongitude();
         setUpListeners();
         setUpTextChangedListeners();
+        SharedPreferences prefs = getSharedPreferences("gdd.PREFS", 0);
+        organizer.setMaturityValue(prefs.getInt("cornMaturityDaysSpinnerVal", 72));
+        organizer.setGDDStartDay(prefs.getInt("dayOfMonthSpinner", 0));
+        organizer.setGddStartMonth(prefs.getString("monthSpinnerVal", String.valueOf(0)));
         data = organizer.beginRetrievingData();
         updateLatLong();
     }
