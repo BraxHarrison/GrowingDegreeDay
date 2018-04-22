@@ -153,7 +153,10 @@ class GDDDataOrganizer {
             fetchedData = result;
         }
         catch(Exception e){
-            System.out.println("There was an exception in trying to get the data asynchronously.");
+            Log.d("CREATION","There was an exception in trying to get the data asynchronously.");
+        }
+        if(result[0].length() <= 2){
+            Log.d("CREATION","There is no data for the selected location");
         }
         return result;
     }

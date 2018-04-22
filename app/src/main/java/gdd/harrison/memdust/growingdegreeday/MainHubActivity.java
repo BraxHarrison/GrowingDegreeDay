@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -40,6 +41,15 @@ public class MainHubActivity extends AppCompatActivity {
         setUpListeners();
         setUpTextChangedListeners();
         data = organizer.beginRetrievingData();
+        updateLatLong();
+    }
+
+    private void updateLatLong() {
+        SharedPreferences prefs = getSharedPreferences("gdd.PREFS",0);
+        String latitude = prefs.getString("currLatitude","(blank)");
+        String longitude = prefs.getString("currLongitude","(blank)");
+        this.latitude.setText(latitude);
+        this.longitude.setText(longitude);
     }
 
     protected void setUpTextChangedListeners(){
@@ -77,9 +87,7 @@ public class MainHubActivity extends AppCompatActivity {
             data = organizer.beginRetrievingData();
         }
     });
-
     }
-
 
     protected void setUpButtons(){
         for (int buttonId : buttonIds) {
@@ -124,10 +132,11 @@ public class MainHubActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("gdd.PREFS",0);
         SharedPreferences.Editor prefsEditor = prefs.edit();
 
-        prefsEditor.putString("currLatitude",latlongPair[0] + "");
-        prefsEditor.putString("currLongiude", latlongPair[1]+"");
+        prefsEditor.putString("currLatitude",latlongPair[1] + "");
+        prefsEditor.putString("currLongitude", latlongPair[0]+"");
 
         prefsEditor.apply();
+        updateLatLong();
     }
 
     protected void setLatitudeAndLongitude(){
@@ -147,7 +156,7 @@ public class MainHubActivity extends AppCompatActivity {
                         switchToCorrectActivity(finalI, classList[finalI]);
                     }
                     else if ((finalI == 4)){
-                        replacelatlonTextView(checkLocationData());
+                        replaceLatLongTextView(checkLocationData());
                     }
                     else{
                         switchToCorrectActivity(finalI, classList[finalI]);
@@ -191,11 +200,11 @@ public class MainHubActivity extends AppCompatActivity {
         }
     }
 
-    protected void replacelatlonTextView(double[] latlong){
-        String latitude = Double.toString(latlong[1]);
-        String longitude = Double.toString(latlong[0]);
-        this.latitude.setText(latitude);
-        this.longitude.setText(longitude);
+    protected void replaceLatLongTextView(double[] latlong){
+//        String latitude = Double.toString(latlong[1]);
+//        String longitude = Double.toString(latlong[0]);
+//        this.latitude.setText(latitude);
+//        this.longitude.setText(longitude);
     }
 
     protected void addOnlySomePartsOfTheData(String[] data){
@@ -204,6 +213,12 @@ public class MainHubActivity extends AppCompatActivity {
 
     protected void addOnlySomePartsOfTheDataTable(String[] data){
         dataForTable[0] = data[0];
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        updateLatLong();
     }
 
 }
