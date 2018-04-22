@@ -1,5 +1,6 @@
 package gdd.harrison.memdust.growingdegreeday;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -62,7 +63,6 @@ class GDDDataOrganizer {
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
         return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(organizeAccumulatedData(accumulatedDataIntoArray))));
     }
-
 
     String getGDDProjection(){
         String[] accumulatedModels = fetchedData[3].split(" ");

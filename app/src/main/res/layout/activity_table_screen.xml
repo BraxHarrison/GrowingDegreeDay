@@ -8,146 +8,187 @@
     android:layout_marginLeft="8dp"
     tools:context="gdd.harrison.memdust.growingdegreeday.TableScreen">
 
-    <TextView
-        android:id="@+id/avgGDDHeader"
-        android:layout_width="121dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="none"
-        android:text="AVG GDD"
-        app:layout_constraintBottom_toTopOf="@+id/avgList"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/customHeader"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2"
-        app:layout_constraintVertical_bias="1.0"
-        android:layout_marginRight="5dp" />
-
-    <TextView
-        android:id="@+id/dateHeader"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="none"
-        android:text="Date"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/dateList"
-        app:layout_constraintEnd_toStartOf="@+id/customHeader"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/customHeader"
-        android:layout_width="137dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="none"
-        android:text="Acc GDD"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/customList"
-        app:layout_constraintEnd_toStartOf="@+id/avgGDDHeader"
-        app:layout_constraintStart_toEndOf="@+id/dateHeader"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2"
-        app:layout_constraintVertical_bias="0.73" />
-
-    <TextView
-        android:id="@+id/editText"
-        android:layout_width="126dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="none"
-        android:singleLine="true"
-        android:text="(Select Range)"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.965"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.036" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="222dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:entries="@array/selectionOptions"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.00999999" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="222dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:entries="@array/accumulatedDetails"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.120000005" />
-
     <LinearLayout
-        android:id="@+id/dateList"
-        android:layout_width="70dp"
-        android:layout_height="312dp"
-        android:layout_marginBottom="153dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginStart="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/customList"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateHeader">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/customList"
-        android:layout_width="137dp"
-        android:layout_height="312dp"
-        android:layout_marginBottom="153dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/avgGDDHeader"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toEndOf="@+id/dateHeader"
-        app:layout_constraintTop_toBottomOf="@+id/customHeader"></LinearLayout>
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="407dp"
+                android:layout_height="44dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:entries="@array/selectionOptions"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editText"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.00999999" />
 
-    <LinearLayout
-        android:id="@+id/avgList"
-        android:layout_width="121dp"
-        android:layout_height="312dp"
-        android:layout_marginBottom="153dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/customList"
-        app:layout_constraintTop_toBottomOf="@+id/avgGDDHeader">
+            <TextView
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="none"
+                android:singleLine="true"
+                android:text="(Select Range)"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.965"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.036" />
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:entries="@array/accumulatedDetails"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.120000005" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dateHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="none"
+                android:text="Date"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/dateList"
+                app:layout_constraintEnd_toStartOf="@+id/customHeader"
+                app:layout_constraintHorizontal_bias="0.54"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner2"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/customHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="none"
+                android:text="Acc GDD"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/customList"
+                app:layout_constraintEnd_toStartOf="@+id/avgGDDHeader"
+                app:layout_constraintStart_toEndOf="@+id/dateHeader"
+                app:layout_constraintTop_toBottomOf="@+id/spinner2"
+                app:layout_constraintVertical_bias="0.73" />
+
+            <TextView
+                android:id="@+id/avgGDDHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="none"
+                android:text="AVG GDD"
+                app:layout_constraintBottom_toTopOf="@+id/avgList"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/customHeader"
+                app:layout_constraintTop_toBottomOf="@+id/spinner2"
+                app:layout_constraintVertical_bias="1.0" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/dateList"
+                        android:layout_width="119dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="153dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/customList"
+                        app:layout_constraintHorizontal_bias="0.54"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dateHeader">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/customList"
+                        android:layout_width="112dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="153dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/avgGDDHeader"
+                        app:layout_constraintHorizontal_bias="0.48"
+                        app:layout_constraintStart_toEndOf="@+id/dateHeader"
+                        app:layout_constraintTop_toBottomOf="@+id/customHeader"></LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/avgList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="153dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/avgGDDHeader">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 

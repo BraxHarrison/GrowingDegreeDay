@@ -40,6 +40,7 @@ public class TableScreen extends AppCompatActivity{
         listenForFirstSpinner();
         listenForSecondSpinner();
         organizeLayersArray();
+        getCorrectDatesForLayers();
     }
 
     protected void generateAverageGDDDataForDisplay(){
@@ -90,6 +91,26 @@ public class TableScreen extends AppCompatActivity{
         cornLayers = stringWithRemovedBackBrackets.split(",");
     }
 
+    protected void getCorrectDatesForLayers(){
+        GDDDataCalculator calendarCalc = new GDDDataCalculator();
+        String[] stages = dataArray[6].split(",");
+        int[] dateIndices = findFirstIndicesOfTheNewStages(stages);
+        for (int i = 0; i < dateIndices.length; i++){
+            int[] currentMonthAndDay = calendarCalc.calculateMonthAndDayGivenADay(dateIndices[i]);
+            if (i < 5){
+                cornLayers[i] = currentMonthAndDay[0] + "/"+currentMonthAndDay[1] + "/" + calendarCalc.getCurrentYear();
+            }
+            else if(i ==6){
+                dataArray[2] = currentMonthAndDay[0] + "/"+currentMonthAndDay[1] + "/" + calendarCalc.getCurrentYear();
+            }
+            else{
+                dataArray[3] = currentMonthAndDay[0] + "/"+currentMonthAndDay[1] + "/" + calendarCalc.getCurrentYear();
+            }
+
+        }
+
+    }
+
     protected void generateVegetationStagesForDisplay(){
         String[] stages = dataArray[6].split(",");
         customHeader.setText(R.string.vegetation_stage);
@@ -104,6 +125,50 @@ public class TableScreen extends AppCompatActivity{
             changingList.addView(tv);
         }
 
+    }
+
+    protected int[] findFirstIndicesOfTheNewStages(String[] stages){
+        boolean hasBeenV2 = false;
+        boolean hasBeenV4 = false;
+        boolean hasBeenV6 = false;
+        boolean hasBeenV8 = false;
+        boolean hasBeenV10 = false;
+        boolean hasBeenSilking = false;
+        boolean hasBeenBlackLayer = false;
+        int[] dateIndices = new int[7];
+        for (int i = 0; i < stages.length; i++){
+            if ((stages[i].equals(" V2")) && (!hasBeenV2)){
+                dateIndices[0] = i;
+                hasBeenV2 = true;
+            }
+            else if((stages[i].equals(" V4")) && (!hasBeenV4)) {
+                dateIndices[1] = i;
+                hasBeenV4 = true;
+            }
+            else if((stages[i].equals(" V6")) && (!hasBeenV6)){
+                dateIndices[2] = i;
+                hasBeenV6 = true;
+            }
+            else if((stages[i].equals(" V8")) && (!hasBeenV8)){
+                dateIndices[3] = i;
+                hasBeenV8 = true;
+            }
+            else if((stages[i].equals(" V10"))&& (!hasBeenV10)){
+                dateIndices[4] = i;
+                hasBeenV10 = true;
+            }
+            else if((stages[i].equals(" Silking Layer")) && (!hasBeenSilking)){
+                dateIndices[5] = i;
+                hasBeenSilking = true;
+            }
+            else if((stages[i].equals(" Black Layer")) && (!hasBeenBlackLayer)){
+                dateIndices[6] = i;
+                hasBeenBlackLayer = true;
+            }
+
+        }
+
+        return dateIndices;
     }
 
     void listenForSecondSpinner(){
@@ -122,7 +187,6 @@ public class TableScreen extends AppCompatActivity{
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView){
-
             }
         });
     }

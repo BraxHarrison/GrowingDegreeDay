@@ -1,5 +1,7 @@
 package gdd.harrison.memdust.growingdegreeday;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -96,9 +98,15 @@ class GDDDataCalculator {
             for (int i = 0; i < listOfAllYears.size(); i++){
                 sumOfAllYearsOnSingleDay = sumOfAllYearsOnSingleDay + listOfAllYears.get(i).get(j);
             }
-            averages.add(sumOfAllYearsOnSingleDay/listOfAllYears.size());
+            averages.add(round(sumOfAllYearsOnSingleDay/listOfAllYears.size()));
         }
         return averages;
+    }
+
+    private double round(double value){
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(3, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     int getCurrentYear(){
