@@ -43,8 +43,8 @@ public class MainHubActivity extends AppCompatActivity {
         setUpTextChangedListeners();
         SharedPreferences prefs = getSharedPreferences("gdd.PREFS", 0);
         organizer.setMaturityValue(prefs.getInt("cornMaturityDaysSpinnerVal", 72));
-        organizer.setGDDStartDay(prefs.getInt("dayOfMonthSpinner", 0));
-        organizer.setGddStartMonth(prefs.getString("monthSpinnerVal", String.valueOf(0)));
+        organizer.setGDDStartDay(prefs.getInt("dayOfMonthSpinner", 1));
+        organizer.setGddStartMonth(prefs.getString("monthSpinnerVal", "January"));
     }
 
     private void updateLatLong() {
@@ -55,7 +55,7 @@ public class MainHubActivity extends AppCompatActivity {
         this.longitude.setText(longitude);
     }
 
-    protected void setUpTextChangedListeners(){
+    protected void setUpTextChangedListeners() {
         longitude.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -73,24 +73,8 @@ public class MainHubActivity extends AppCompatActivity {
                 data = organizer.beginRetrievingData();
             }
         });
-    latitude.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            setLatitudeAndLongitude();
-            data = organizer.beginRetrievingData();
-        }
-    });
     }
+
 
     protected void setUpButtons(){
         for (int buttonId : buttonIds) {
@@ -146,7 +130,6 @@ public class MainHubActivity extends AppCompatActivity {
         prefsEditor.putString("currLatitude",latlongPair[1] + "");
         prefsEditor.putString("currLongitude", latlongPair[0]+"");
         prefsEditor.apply();
-        updateLatLong();
     }
 
     protected void setLatitudeAndLongitude(){
