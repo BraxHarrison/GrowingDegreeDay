@@ -3,6 +3,7 @@ package gdd.harrison.memdust.growingdegreeday;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,6 +41,15 @@ public class MainHubActivity extends AppCompatActivity {
         setUpListeners();
         setUpTextChangedListeners();
         data = organizer.beginRetrievingData();
+        updateLatLong();
+    }
+
+    private void updateLatLong() {
+        SharedPreferences prefs = getSharedPreferences("gdd.PREFS",0);
+        String latitude = prefs.getString("currLatitude","(blank)");
+        String longitude = prefs.getString("currLongitude","(blank)");
+        this.latitude.setText(latitude);
+        this.longitude.setText(longitude);
     }
 
     protected void setUpTextChangedListeners(){
@@ -76,9 +87,7 @@ public class MainHubActivity extends AppCompatActivity {
             data = organizer.beginRetrievingData();
         }
     });
-
     }
-
 
     protected void setUpButtons(){
         for (int buttonId : buttonIds) {
@@ -101,7 +110,7 @@ public class MainHubActivity extends AppCompatActivity {
     private double[] checkLocationData() {
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        double[] latlongPair = new double[2];
+        double[] latLongPair = new double[2];
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -110,21 +119,33 @@ public class MainHubActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return latlongPair;
+            return latLongPair;
         }
         Location location;
         if (lm != null) {
             location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (location!= null){
-                latlongPair[0] = location.getLongitude();
-                latlongPair[1] = location.getLatitude();
+                latLongPair[0] = location.getLongitude();
+                latLongPair[1] = location.getLatitude();
             }
             else{
-                latlongPair[0] = -85.3864;
-                latlongPair[1] = 40.116;
+                latLongPair[0] = -85.3864;
+                latLongPair[1] = 40.116;
             }
         }
-        return latlongPair;
+        setLatLongInPrefs(latLongPair);
+        return latLongPair;
+    }
+
+    private void setLatLongInPrefs(double[] latlongPair) {
+        SharedPreferences prefs = getSharedPreferences("gdd.PREFS",0);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+
+        prefsEditor.putString("currLatitude",latlongPair[1] + "");
+        prefsEditor.putString("currLongitude", latlongPair[0]+"");
+
+        prefsEditor.apply();
+        updateLatLong();
     }
 
     protected void setLatitudeAndLongitude(){
@@ -205,6 +226,12 @@ public class MainHubActivity extends AppCompatActivity {
 
     protected void addOnlySomePartsOfTheDataTable(String[] data){
         dataForTable[0] = data[0];
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        updateLatLong();
     }
 
 }
