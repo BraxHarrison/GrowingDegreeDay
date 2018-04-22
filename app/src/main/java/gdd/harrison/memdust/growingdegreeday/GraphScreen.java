@@ -56,7 +56,12 @@ public class GraphScreen extends AppCompatActivity {
 
     public void createLineSeries() {
         for (int i = 0; i < 7; i++) {
-            if ((i == 2) || (i == 3)){
+            if (i == 0){
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseAverages(dataArray[i]));
+                series.setTitle("Corn Growing Degree Day Tracker");
+                allDataSeries.add(series);
+            }
+            else if ((i == 2) || (i == 3)){
                 LineGraphSeries<DataPoint> horizontalLineSeries = new LineGraphSeries<>(createHorizontalLine(dataArray[i]));
                 if (i == 2){
                     horizontalLineSeries.setColor(Color.BLACK);
@@ -83,6 +88,7 @@ public class GraphScreen extends AppCompatActivity {
 
             }
             else {
+                System.out.println("Current I issue: " + i);
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(parseData(dataArray[i]));
                 series.setTitle("Corn Growing Degree Day Tracker");
                 allDataSeries.add(series);
@@ -122,7 +128,7 @@ public class GraphScreen extends AppCompatActivity {
         String[] splitStrings = rawGDDData.split(" ");
         DataPoint[] dataPoints = new DataPoint[splitStrings.length];
         for (int i = 0; i < splitStrings.length; i++) {
-            dataPoints[i] = new DataPoint(i, Integer.parseInt(splitStrings[i]));
+            dataPoints[i] = new DataPoint(i, Double.parseDouble(splitStrings[i]));
             }
         return dataPoints;
     }

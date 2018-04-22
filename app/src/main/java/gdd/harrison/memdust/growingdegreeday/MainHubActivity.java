@@ -212,7 +212,9 @@ public class MainHubActivity extends AppCompatActivity {
 
     void addCorrectDataNeeded(int i){
         if (i == 1){
-            addOnlySomePartsOfTheData(data);
+            //addOnlySomePartsOfTheData(data);
+            dataForGraph[0] = organizer.getCurrentTrimmedData();
+            dataForGraph[1] = data[2];
             dataForGraph[2] = organizer.getBlackLayer();
             dataForGraph[3] = organizer.getSilkLayer();
             dataForGraph[4] = organizer.getAccumulatedAverage();

@@ -17,6 +17,7 @@ class GDDDataOrganizer {
     private String gddStartMonth;
     private int gddStartDay;
     private int firstDayGDDNumber;
+    private int trimIndex;
 
     private void buildURLs(){
         URLs[0] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetCurrentData=1&lat=" + latitude +"&long=" +longitude;
@@ -40,7 +41,6 @@ class GDDDataOrganizer {
     String[] getFirstDayOfGDDValue(ArrayList<Double> data){
         double firstGDD = data.get(firstDayGDDNumber - 1);
         double[] newData = new double[data.size() - firstDayGDDNumber - 1];
-        System.out.println("The Length of the double array is: " + newData.length);
         for (int i = 0; i < newData.length; i++){
             newData[i] = data.get(i+firstDayGDDNumber-1) - firstGDD;
         }
@@ -48,12 +48,12 @@ class GDDDataOrganizer {
         for (int i = 0; i < newData.length;  i++){
             newDataAsStringArray[i] = String.valueOf(newData[i]);
         }
-        System.out.print(Arrays.toString(newDataAsStringArray));
         return newDataAsStringArray;
     }
 
     String[] trimCurrentArray(String[] data){
         double firstGDD = Double.parseDouble(data[firstDayGDDNumber - 1]);
+        trimIndex = data.length - firstDayGDDNumber - 1;
         double[] newData = new double[data.length - firstDayGDDNumber - 1];
         for (int i = 0; i < newData.length; i++){
             newData[i] = Double.parseDouble(data[i+firstDayGDDNumber-1]) - firstGDD;
@@ -132,6 +132,11 @@ class GDDDataOrganizer {
         return fetchedData[0];
     }
 
+    String getCurrentTrimmedData(){
+        System.out.println(removeExcessCharacters(Arrays.toString(trimCurrentArray(fetchedData[0].split(" ")))));
+        return removeExcessCharacters(Arrays.toString(trimCurrentArray(fetchedData[0].split(" "))));
+    }
+
     String getCurrentLayerOfData(){
         String[] projection = getGDDProjection().split(",");
         double[] doubleProjection = new double[projection.length];
@@ -163,7 +168,7 @@ class GDDDataOrganizer {
     }
 
     int getCurrentDay(){
-        return currentDay;
+        return trimIndex;
     }
 
 
@@ -232,9 +237,6 @@ class GDDDataOrganizer {
         }
         return dataForSingleYear;
     }
-
-
-
 
     private String removeExcessCharacters(String unformattedString){
         String halfFormattedString = unformattedString.replace("[", "");
