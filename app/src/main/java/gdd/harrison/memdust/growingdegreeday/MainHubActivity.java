@@ -1,6 +1,7 @@
 package gdd.harrison.memdust.growingdegreeday;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -161,11 +162,15 @@ public class MainHubActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     if ((finalI == 1) || (finalI == 2)){
                         addOnlySomePartsOfTheData(data);
+                        organizer.updateIndexOfFirstDay();
                         addCorrectDataNeeded(finalI);
                         switchToCorrectActivity(finalI, classList[finalI]);
                     }
                     else if ((finalI == 4)){
                         replacelatlonTextView(checkLocationData());
+                    }
+                    else if ((finalI == 3)){
+                        switchToCorrectActivity(finalI, classList[finalI]);
                     }
                     else{
                         switchToCorrectActivity(finalI, classList[finalI]);
@@ -178,8 +183,21 @@ public class MainHubActivity extends AppCompatActivity {
     void switchToCorrectActivity(int i, Class specificClass){
         Intent viewIntent = new Intent(this, specificClass);
         viewIntent = putCorrectExtras(viewIntent, i);
-        startActivity(viewIntent);
+        startActivityForResult(viewIntent, 1);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == 1){
+            if(resultCode == Activity.RESULT_OK){
+                String[] result = data.getStringArrayExtra("resultingArray");
+                organizer.setMaturityValue(Integer.parseInt(result[0]));
+                organizer.setGDDStartDay(Integer.parseInt(result[2]));
+                organizer.setGddStartMonth(result[1]);
+            }
+        }
+    }
+
 
     Intent putCorrectExtras(Intent intent, int i){
         if (i == 1){
@@ -208,7 +226,7 @@ public class MainHubActivity extends AppCompatActivity {
             dataForTable[2] = organizer.getBlackLayer();
             dataForTable[3] = organizer.getSilkLayer();
             dataForTable[4] = organizer.getAccumulatedAverage();
-            dataForTable[5] = organizer.getCurrentData();
+            dataForTable[5] = organizer.getCurrentFetchedData();
             dataForTable[6] = organizer.getCurrentLayerOfData();
         }
     }
@@ -229,8 +247,8 @@ public class MainHubActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume(){
-        super.onResume();
+    protected void onDestroy(){
+        super.onDestroy();
         updateLatLong();
     }
 

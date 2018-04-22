@@ -14,12 +14,93 @@ class GDDDataOrganizer {
     private String[] fetchedData;
     private double maturityValue = 72.0;
     private int currentDay;
+    private String gddStartMonth;
+    private int gddStartDay;
+    private int firstDayGDDNumber;
 
     private void buildURLs(){
         URLs[0] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetCurrentData=1&lat=" + latitude +"&long=" +longitude;
         URLs[1] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetMinimumPreviousData=1&lat=" + latitude +"&long=" +longitude;
         URLs[2] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetAllData=1&lat=" + latitude +"&long=" +longitude;
         URLs[3] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetForecastData=1&lat=" + latitude +"&long=" +longitude;
+    }
+
+    void setMaturityValue(double maturityValue){
+        this.maturityValue = maturityValue;
+    }
+
+    void setFirstDayOfGDD(int dayNumber){
+        this.firstDayGDDNumber = dayNumber;
+    }
+
+    void updateIndexOfFirstDay(){
+        setFirstDayOfGDD(calculator.calculateDayNumber(calculateMonthNumber(gddStartMonth), gddStartDay));
+    }
+
+    String[] getFirstDayOfGDDValue(ArrayList<Double> data){
+        double firstGDD = data.get(firstDayGDDNumber - 1);
+        double[] newData = new double[data.size() - firstDayGDDNumber - 1];
+        System.out.println("The Length of the double array is: " + newData.length);
+        for (int i = 0; i < newData.length; i++){
+            newData[i] = data.get(i+firstDayGDDNumber-1) - firstGDD;
+        }
+        String[] newDataAsStringArray = new String[newData.length];
+        for (int i = 0; i < newData.length;  i++){
+            newDataAsStringArray[i] = String.valueOf(newData[i]);
+        }
+        System.out.print(Arrays.toString(newDataAsStringArray));
+        return newDataAsStringArray;
+    }
+
+    String[] trimCurrentArray(String[] data){
+        double firstGDD = Double.parseDouble(data[firstDayGDDNumber - 1]);
+        double[] newData = new double[data.length - firstDayGDDNumber - 1];
+        for (int i = 0; i < newData.length; i++){
+            newData[i] = Double.parseDouble(data[i+firstDayGDDNumber-1]) - firstGDD;
+        }
+        String[] newDataAsStringArray = new String[newData.length];
+        for (int i = 0; i < newData.length;  i++){
+            newDataAsStringArray[i] = String.valueOf(newData[i]);
+        }
+        return newDataAsStringArray;
+    }
+
+
+    int calculateMonthNumber(String month){
+        switch (month) {
+            case "January":
+                return 0;
+            case "February":
+                return 1;
+            case "March":
+                return 2;
+            case "April":
+                return 3;
+            case "May":
+                return 4;
+            case "June":
+                return 5;
+            case "July":
+                return 6;
+            case "August":
+                return 7;
+            case "September":
+                return 8;
+            case "October":
+                return 9;
+            case "November":
+                return 10;
+            case "December":
+                return 11;
+        }
+        return 0;
+    }
+    void setGDDStartDay(int gddStartDay){
+        this.gddStartDay = gddStartDay;
+    }
+
+    void setGddStartMonth(String GDDStartMonth){
+        gddStartMonth = GDDStartMonth;
     }
 
     String[] beginRetrievingData(){
@@ -62,13 +143,13 @@ class GDDDataOrganizer {
 
     String getAccumulatedAverage(){
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
-        return removeExcessCharacters(String.valueOf(calculator.calculateTotalGDDAverage(organizeAccumulatedData(accumulatedDataIntoArray))));
+        return removeExcessCharacters(Arrays.toString(getFirstDayOfGDDValue(calculator.calculateTotalGDDAverage(organizeAccumulatedData(accumulatedDataIntoArray)))));
     }
 
     String getGDDProjection(){
         String[] accumulatedModels = fetchedData[3].split(" ");
         String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
-        String[] accumulatedCurrentData = fetchedData[0].split(" ");
+        String[] accumulatedCurrentData = trimCurrentArray(fetchedData[0].split(" "));
         String gddProjection = removeExcessCharacters(String.valueOf(calculator.calculateGDDProjection(organizeAccumulatedData(accumulatedDataIntoArray),
                 organizeModels(accumulatedModels, calculator.calculateDayNumber(calculator.getCurrentMonth(), calculator.getCurrentDayOfMonth())),
                 Double.parseDouble(accumulatedCurrentData[accumulatedCurrentData.length-1]))));
@@ -175,11 +256,6 @@ class GDDDataOrganizer {
             Log.d("CREATION","There is no data for the selected location");
         }
         return result;
-    }
-
-    public String getCurrentData(){
-        String[] mostRecentGDD = fetchedData[0].split(" ");
-        return mostRecentGDD[mostRecentGDD.length-1];
     }
 
     public HashMap<String,Integer> getAllCornStages(){

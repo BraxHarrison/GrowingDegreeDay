@@ -1,5 +1,6 @@
 package gdd.harrison.memdust.growingdegreeday;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,10 @@ public class SettingsScreenActivity extends AppCompatActivity {
     Context context;
     NotificationAlarm freezeChecker;
     SharedPreferences savedPrefs;
+    String[] preferences = new String[3];
+    Spinner cornMatSpin;
+    Spinner daySpin;
+    Spinner monthSpin;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,9 @@ public class SettingsScreenActivity extends AppCompatActivity {
         setUpDayFreezingTemperatureSpinner();
         setUpSettingsButton();
         loadSettings();
+        cornMatSpin = (Spinner) findViewById(R.id.cornMaturityDaysSpinner);
+        daySpin = (Spinner) findViewById(R.id.dayOfMonthSpinner);
+        monthSpin = (Spinner) findViewById(R.id.monthSpinner);
     }
 
     protected void getPrefs(){
@@ -105,17 +113,31 @@ public class SettingsScreenActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                setPreferencesArray();
                 saveSettings();
+                sendResultToPrevious();
             }
         });
+    }
+
+    protected void setPreferencesArray(){
+        preferences[0] = cornMatSpin.getSelectedItem().toString();
+        preferences[1] = monthSpin.getSelectedItem().toString();
+        preferences[2] = daySpin.getSelectedItem().toString();
+
+    }
+
+    protected void sendResultToPrevious(){
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("resultingArray", preferences);
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 
     protected void saveSettings(){
         SharedPreferences.Editor prefEdit = savedPrefs.edit();
 
-        Spinner monthSpin = (Spinner) findViewById(R.id.monthSpinner);
-        Spinner cornMatSpin = (Spinner) findViewById(R.id.cornMaturityDaysSpinner);
-        Spinner daySpin = (Spinner) findViewById(R.id.dayOfMonthSpinner);
+
         Spinner freezeSpin = (Spinner) findViewById(R.id.freezing_temperature_spinner);
         Switch notificationButton = (Switch) findViewById(R.id.receiveNotificationsButton);
 

@@ -3,7 +3,6 @@ package gdd.harrison.memdust.growingdegreeday;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
 class GDDDataCalculator {
@@ -25,7 +24,6 @@ class GDDDataCalculator {
     ArrayList<Integer> combineFreezeDataArraysForEntireYear(ArrayList<ArrayList<Double>> accumulatedFreezeData, int freezingTemperature){
         int[] firstFreeze = createFirstFreezeDataArray(accumulatedFreezeData,freezingTemperature);
         int[] lastFreeze = createLastFreezeDataArray(accumulatedFreezeData,freezingTemperature);
-        System.out.println(Arrays.toString(firstFreeze));
         ArrayList<Integer> combinedFreezes = new ArrayList<>();
         for (int i = 0; i < firstFreeze.length; i++){
             combinedFreezes.add(firstFreeze[i]+lastFreeze[i]);
@@ -37,7 +35,6 @@ class GDDDataCalculator {
         int[] firstFreezeDayCounts = new int[determineNumberOfDaysInYear(getCurrentYear())];
         for(int j = 0; j < accumulatedFreezeData.size();j++) {
             for (int i = 231; i < firstFreezeDayCounts.length; i++) {
-                System.out.println(accumulatedFreezeData.get(j).get(i));
                 if (accumulatedFreezeData.get(j).get(i) <= freezingTemperature) {
                     firstFreezeDayCounts[i]++;
                     break;
@@ -77,7 +74,6 @@ class GDDDataCalculator {
         for (int i = dayNumber - 1; i < totalAverage.size(); i++){
             gddProjection.add(totalAverage.get(i));
         }
-        System.out.println(gddProjection);
         return gddProjection;
         }
 
