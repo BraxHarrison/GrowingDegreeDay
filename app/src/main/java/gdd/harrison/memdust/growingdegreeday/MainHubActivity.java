@@ -45,8 +45,6 @@ public class MainHubActivity extends AppCompatActivity {
         organizer.setMaturityValue(prefs.getInt("cornMaturityDaysSpinnerVal", 72));
         organizer.setGDDStartDay(prefs.getInt("dayOfMonthSpinner", 0));
         organizer.setGddStartMonth(prefs.getString("monthSpinnerVal", String.valueOf(0)));
-        data = organizer.beginRetrievingData();
-        updateLatLong();
     }
 
     private void updateLatLong() {
@@ -145,10 +143,8 @@ public class MainHubActivity extends AppCompatActivity {
     private void setLatLongInPrefs(double[] latlongPair) {
         SharedPreferences prefs = getSharedPreferences("gdd.PREFS",0);
         SharedPreferences.Editor prefsEditor = prefs.edit();
-
         prefsEditor.putString("currLatitude",latlongPair[1] + "");
         prefsEditor.putString("currLongitude", latlongPair[0]+"");
-
         prefsEditor.apply();
         updateLatLong();
     }
@@ -253,8 +249,8 @@ public class MainHubActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy(){
-        super.onDestroy();
+    protected void onResume(){
+        super.onResume();
         updateLatLong();
     }
 
