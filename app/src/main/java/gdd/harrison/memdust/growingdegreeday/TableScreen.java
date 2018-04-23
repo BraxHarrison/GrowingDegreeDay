@@ -3,6 +3,7 @@ package gdd.harrison.memdust.growingdegreeday;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class TableScreen extends AppCompatActivity{
@@ -45,19 +47,21 @@ public class TableScreen extends AppCompatActivity{
 
     protected void generateAverageGDDDataForDisplay(){
         String[] splitData = dataArray[4].split(", ");
+        DecimalFormat df = new DecimalFormat("#.###");
         for (int i = 0; i < splitData.length; i++){
             LinearLayout averageLayout = this.findViewById(R.id.avgList);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
             TextView tv = new TextView(this);
             tv.setLayoutParams(layoutParams);
-            tv.setText(splitData[i]);
+            tv.setText(df.format(Double.parseDouble(splitData[i])));
             averageLayout.addView(tv);
         }
     }
 
 
     protected void generateAccumulatedDataForDisplay(){
-        String[] splitData = dataArray[5].split(" ");
+        String[] splitData = dataArray[5].split(", ");
+        DecimalFormat df = new DecimalFormat("#.###");
         customHeader.setText(R.string.Acc_GDD);
         if(changingList.getChildCount() > 0){
             changingList.removeAllViews();
@@ -66,7 +70,7 @@ public class TableScreen extends AppCompatActivity{
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
             TextView tv = new TextView(this);
             tv.setLayoutParams(layoutParams);
-            tv.setText(splitData[i]);
+            tv.setText(df.format(Double.parseDouble(splitData[i])));
             changingList.addView(tv);
         }
     }
@@ -74,7 +78,10 @@ public class TableScreen extends AppCompatActivity{
     @SuppressLint("SetTextI18n")
     void generateDateStringsForDisplay(){
         GDDDataCalculator calendarCalc = new GDDDataCalculator();
-        for (int i = 1; i <= 365; i++){
+        SharedPreferences prefs = getSharedPreferences("gdd.PREFS", 0);
+        GDDDataOrganizer organizer = new GDDDataOrganizer();
+        int startingDay = calendarCalc.calculateDayNumber(organizer.calculateMonthNumber(prefs.getString("monthSpinnerVal", "January")), prefs.getInt("dayOfMonthSpinner", 1));
+        for (int i = startingDay; i <= 365; i++){
             int[] currentMonthAndDay = calendarCalc.calculateMonthAndDayGivenADay(i);
             LinearLayout dateLayout = this.findViewById(R.id.dateList);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
@@ -197,8 +204,8 @@ public class TableScreen extends AppCompatActivity{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch(i){
                     case 0:
-                        String currentValues = dataArray[0];
-                        String[] currentGDD = currentValues.split(" ");
+                        String currentValues = dataArray[5];
+                        String[] currentGDD = currentValues.split(", ");
                         textView.setText(currentGDD[currentGDD.length-1]);
                         break;
                     case 1:

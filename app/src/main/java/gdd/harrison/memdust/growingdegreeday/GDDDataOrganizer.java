@@ -128,22 +128,24 @@ class GDDDataOrganizer {
         return Arrays.toString(calculator.calculateCornLayers());
     }
 
-    String getCurrentFetchedData(){
-        return fetchedData[0];
-    }
-
     String getCurrentTrimmedData(){
-        System.out.println(removeExcessCharacters(Arrays.toString(trimCurrentArray(fetchedData[0].split(" ")))));
         return removeExcessCharacters(Arrays.toString(trimCurrentArray(fetchedData[0].split(" "))));
     }
 
     String getCurrentLayerOfData(){
         String[] projection = getGDDProjection().split(",");
-        double[] doubleProjection = new double[projection.length];
-        for (int i = 0; i < projection.length; i++){
-            doubleProjection[i] = Double.parseDouble(projection[i]);
+        String[] currentData = getCurrentTrimmedData().split(",");
+        double[] doubleProjectionAndCurrentData = new double[projection.length + currentData.length];
+        System.out.println(doubleProjectionAndCurrentData.length);
+        for (int i = 0; i < currentData.length; i++){
+            doubleProjectionAndCurrentData[i] = Double.parseDouble(currentData[i]);
         }
-        return removeExcessCharacters(Arrays.toString(calculator.calculateLayerGivenListOfGDDs(doubleProjection, maturityValue)));
+        int projectionIndex = 0;
+        for (int j = currentData.length; j < doubleProjectionAndCurrentData.length; j++){
+            doubleProjectionAndCurrentData[j] = Double.parseDouble(projection[projectionIndex]);
+            projectionIndex++;
+        }
+        return removeExcessCharacters(Arrays.toString(calculator.calculateLayerGivenListOfGDDs(doubleProjectionAndCurrentData, maturityValue)));
     }
 
     String getAccumulatedAverage(){
