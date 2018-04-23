@@ -46,12 +46,12 @@ public class GraphScreen extends AppCompatActivity {
 
     public void createButtonIds(){
         currentButton = findViewById(R.id.CurrentDataButton);
-        minTempButton = findViewById(R.id.MinDataButton);
+        //minTempButton = findViewById(R.id.MinDataButton);
     }
 
     public void listenToButtons(){
         listenForCurrentButton();
-        listenForMinTempButton();
+        //listenForMinTempButton();
     }
 
     public void createLineSeries() {
@@ -143,16 +143,16 @@ public class GraphScreen extends AppCompatActivity {
 
     }
 
-    private void listenForMinTempButton(){
+    /*private void listenForMinTempButton(){
         minTempButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 buildMinGraph();
             }
         });
-    }
+    }*/
 
-    protected void buildMinGraph(){
+    /*protected void buildMinGraph(){
         graph.removeAllSeries();
         graph.setTitle("Minimum Temperature Measurements");
         GridLabelRenderer gridLabelRenderer = graph.getGridLabelRenderer();
@@ -164,12 +164,13 @@ public class GraphScreen extends AppCompatActivity {
         graph.getViewport().setMaxY(120);
         graph.addSeries(barGraphSeries);
     }
+    */
 
     protected void buildGraph(){
         graph.removeAllSeries();
         graph.setTitle("Current Growing Degree Data and Projections");
         GridLabelRenderer gridLabelRenderer = graph.getGridLabelRenderer();
-        gridLabelRenderer.setHorizontalAxisTitle("Days since January 1st");
+        gridLabelRenderer.setHorizontalAxisTitle("Days Since GDD Start");
         gridLabelRenderer.setVerticalAxisTitle("Growing Degree Days");
         graph.getViewport().setMinX(0);
         graph.getViewport().setMinY(0);
