@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -38,9 +39,19 @@ public class GraphScreen extends AppCompatActivity {
         super.onStart();
         Intent intent = getIntent();
         dataArray = intent.getStringArrayExtra("dataForDisplay");
-        graph = findViewById(R.id.graph);
-        createLineSeries();
-        buildGraph();
+        if (dataArray[0] == null){
+            displayToastMessage();
+        }
+        else{
+            graph = findViewById(R.id.graph);
+            createLineSeries();
+            buildGraph();
+        }
+
+    }
+
+    protected void displayToastMessage(){
+        Toast.makeText(getApplicationContext(), "You must not be connected to the internet. Please do to receive data", Toast.LENGTH_LONG).show();
     }
 
 

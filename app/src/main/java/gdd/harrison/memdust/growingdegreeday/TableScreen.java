@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -31,18 +32,28 @@ public class TableScreen extends AppCompatActivity{
         setContentView(R.layout.activity_table_screen);
         Intent thisIntent = getIntent();
         dataArray = thisIntent.getStringArrayExtra("dataForDisplay");
+        System.out.println(Arrays.toString(dataArray));
         smallSpinner = (Spinner) findViewById(R.id.spinner);
         largeSpinner = findViewById(R.id.spinner2);
         textView = findViewById(R.id.editText);
         changingList = this.findViewById(R.id.customList);
         customHeader = findViewById(R.id.customHeader);
-        generateDateStringsForDisplay();
-        generateAccumulatedDataForDisplay();
-        generateAverageGDDDataForDisplay();
-        listenForFirstSpinner();
-        listenForSecondSpinner();
-        organizeLayersArray();
-        getCorrectDatesForLayers();
+        if (dataArray[0] == null){
+            displayToastMessage();
+        }
+        else{
+            generateDateStringsForDisplay();
+            generateAccumulatedDataForDisplay();
+            generateAverageGDDDataForDisplay();
+            listenForFirstSpinner();
+            listenForSecondSpinner();
+            organizeLayersArray();
+            getCorrectDatesForLayers();
+        }
+    }
+
+    public void displayToastMessage(){
+        Toast.makeText(getApplicationContext(), "You must not be connected to the internet. Please do to receive data", Toast.LENGTH_LONG).show();
     }
 
     protected void generateAverageGDDDataForDisplay(){

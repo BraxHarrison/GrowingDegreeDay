@@ -47,8 +47,8 @@ public class GDDDataRetriever extends AsyncTask<String, Void, String[]> {
             return readDataFromWebsite(reader, stringBuilder);
         } catch (Exception e) {
             System.out.println("There was an issue grabbing the data from the website.");
+            return null;
         }
-        return null;
     }
 
     private String readDataFromWebsite(BufferedReader reader, StringBuilder stringBuilder)throws Exception{

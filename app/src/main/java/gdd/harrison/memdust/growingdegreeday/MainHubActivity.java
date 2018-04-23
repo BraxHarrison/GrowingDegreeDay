@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -71,6 +72,9 @@ public class MainHubActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 setLatitudeAndLongitude();
                 data = organizer.beginRetrievingData();
+                if (data == null){
+                    Toast.makeText(getApplicationContext(), "You must connect to the internet to retrieve data.",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -195,24 +199,28 @@ public class MainHubActivity extends AppCompatActivity {
 
     void addCorrectDataNeeded(int i){
         if (i == 1){
-            //addOnlySomePartsOfTheData(data);
-            dataForGraph[0] = organizer.getCurrentTrimmedData();
-            dataForGraph[1] = data[2];
-            dataForGraph[2] = organizer.getBlackLayer();
-            dataForGraph[3] = organizer.getSilkLayer();
-            dataForGraph[4] = organizer.getAccumulatedAverage();
-            dataForGraph[5] = organizer.getGDDProjection();
-            dataForGraph[6] = String.valueOf(organizer.getCurrentDay());
-            dataForGraph[7] = organizer.getFreezeData();
+            if (organizer.getIsConnected()){
+                //addOnlySomePartsOfTheData(data);
+                dataForGraph[0] = organizer.getCurrentTrimmedData();
+                dataForGraph[1] = data[2];
+                dataForGraph[2] = organizer.getBlackLayer();
+                dataForGraph[3] = organizer.getSilkLayer();
+                dataForGraph[4] = organizer.getAccumulatedAverage();
+                dataForGraph[5] = organizer.getGDDProjection();
+                dataForGraph[6] = String.valueOf(organizer.getCurrentDay());
+                dataForGraph[7] = organizer.getFreezeData();
+            }
         }
         if (i==2){
-            addOnlySomePartsOfTheDataTable(data);
-            dataForTable[1] = organizer.getCornStages();
-            dataForTable[2] = organizer.getBlackLayer();
-            dataForTable[3] = organizer.getSilkLayer();
-            dataForTable[4] = organizer.getAccumulatedAverage();
-            dataForTable[5] = organizer.getCurrentTrimmedData();
-            dataForTable[6] = organizer.getCurrentLayerOfData();
+            if(organizer.getIsConnected()){
+                addOnlySomePartsOfTheDataTable(data);
+                dataForTable[1] = organizer.getCornStages();
+                dataForTable[2] = organizer.getBlackLayer();
+                dataForTable[3] = organizer.getSilkLayer();
+                dataForTable[4] = organizer.getAccumulatedAverage();
+                dataForTable[5] = organizer.getCurrentTrimmedData();
+                dataForTable[6] = organizer.getCurrentLayerOfData();
+            }
         }
     }
 

@@ -89,7 +89,7 @@ class GDDDataCalculator {
 
     ArrayList<Double> calculateTotalGDDAverage(ArrayList<ArrayList<Double>> listOfAllYears) {
         ArrayList<Double> averages = new ArrayList<>();
-        for (int j = 0; j < listOfAllYears.get(0).size() - 1; j++){
+        for (int j = 0; j < listOfAllYears.get(0).size(); j++){
             double sumOfAllYearsOnSingleDay = 0;
             for (int i = 0; i < listOfAllYears.size(); i++){
                 sumOfAllYearsOnSingleDay = sumOfAllYearsOnSingleDay + listOfAllYears.get(i).get(j);
@@ -99,7 +99,7 @@ class GDDDataCalculator {
         return averages;
     }
 
-    private double round(double value){
+    double round(double value){
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(3, RoundingMode.HALF_UP);
         return bd.doubleValue();
@@ -186,11 +186,11 @@ class GDDDataCalculator {
         return cornLayers;
     }
 
-    private double calculateV2Layer(){
+    double calculateV2Layer(){
         return 105.0 + 168.0;
     }
 
-    private double calculateVLayer(double previousV){
+    double calculateVLayer(double previousV){
         return previousV + 168.0;
     }
 

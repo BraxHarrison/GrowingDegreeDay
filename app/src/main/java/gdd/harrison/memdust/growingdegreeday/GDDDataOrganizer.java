@@ -18,6 +18,7 @@ class GDDDataOrganizer {
     private int gddStartDay;
     private int firstDayGDDNumber;
     private int trimIndex;
+    private boolean internetIsConnected = false;
 
     private void buildURLs(){
         URLs[0] = "http://mrcc.isws.illinois.edu/U2U/gdd/controllers/datarequest.php?callgetCurrentData=1&lat=" + latitude +"&long=" +longitude;
@@ -129,39 +130,65 @@ class GDDDataOrganizer {
     }
 
     String getCurrentTrimmedData(){
-        return removeExcessCharacters(Arrays.toString(trimCurrentArray(fetchedData[0].split(" "))));
+        System.out.println(internetIsConnected);
+        if (internetIsConnected){
+            return removeExcessCharacters(Arrays.toString(trimCurrentArray(fetchedData[0].split(" "))));
+        }
+        else{
+            return null;
+        }
     }
 
     String getCurrentLayerOfData(){
-        String[] projection = getGDDProjection().split(",");
-        String[] currentData = getCurrentTrimmedData().split(",");
-        double[] doubleProjectionAndCurrentData = new double[projection.length + currentData.length];
-        System.out.println(doubleProjectionAndCurrentData.length);
-        for (int i = 0; i < currentData.length; i++){
-            doubleProjectionAndCurrentData[i] = Double.parseDouble(currentData[i]);
+        if (internetIsConnected){
+            String[] projection = getGDDProjection().split(",");
+            String[] currentData = getCurrentTrimmedData().split(",");
+            double[] doubleProjectionAndCurrentData = new double[projection.length + currentData.length];
+            System.out.println(doubleProjectionAndCurrentData.length);
+            for (int i = 0; i < currentData.length; i++){
+                doubleProjectionAndCurrentData[i] = Double.parseDouble(currentData[i]);
+                }
+            int projectionIndex = 0;
+            for (int j = currentData.length; j < doubleProjectionAndCurrentData.length; j++){
+                doubleProjectionAndCurrentData[j] = Double.parseDouble(projection[projectionIndex]);
+                projectionIndex++;
+            }
+            return removeExcessCharacters(Arrays.toString(calculator.calculateLayerGivenListOfGDDs(doubleProjectionAndCurrentData, maturityValue)));
         }
-        int projectionIndex = 0;
-        for (int j = currentData.length; j < doubleProjectionAndCurrentData.length; j++){
-            doubleProjectionAndCurrentData[j] = Double.parseDouble(projection[projectionIndex]);
-            projectionIndex++;
+        else{
+            return null;
         }
-        return removeExcessCharacters(Arrays.toString(calculator.calculateLayerGivenListOfGDDs(doubleProjectionAndCurrentData, maturityValue)));
     }
 
+    protected boolean getIsConnected(){
+        return internetIsConnected;
+    }
+
+
     String getAccumulatedAverage(){
-        String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
-        return removeExcessCharacters(Arrays.toString(getFirstDayOfGDDValue(calculator.calculateTotalGDDAverage(organizeAccumulatedData(accumulatedDataIntoArray)))));
+        if(internetIsConnected){
+            String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
+            return removeExcessCharacters(Arrays.toString(getFirstDayOfGDDValue(calculator.calculateTotalGDDAverage(organizeAccumulatedData(accumulatedDataIntoArray)))));
+        }
+        else{
+            return null;
+        }
     }
 
     String getGDDProjection(){
-        String[] accumulatedModels = fetchedData[3].split(" ");
-        String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
-        String[] accumulatedCurrentData = trimCurrentArray(fetchedData[0].split(" "));
-        String gddProjection = removeExcessCharacters(String.valueOf(calculator.calculateGDDProjection(organizeAccumulatedData(accumulatedDataIntoArray),
-                organizeModels(accumulatedModels, calculator.calculateDayNumber(calculator.getCurrentMonth(), calculator.getCurrentDayOfMonth())),
-                Double.parseDouble(accumulatedCurrentData[accumulatedCurrentData.length-1]))));
-        currentDay = calculator.getModelDay();
-        return gddProjection;
+        if(internetIsConnected){
+            String[] accumulatedModels = fetchedData[3].split(" ");
+            String[] accumulatedDataIntoArray = fetchedData[2].split(" ");
+            String[] accumulatedCurrentData = trimCurrentArray(fetchedData[0].split(" "));
+            String gddProjection = removeExcessCharacters(String.valueOf(calculator.calculateGDDProjection(organizeAccumulatedData(accumulatedDataIntoArray),
+                    organizeModels(accumulatedModels, calculator.calculateDayNumber(calculator.getCurrentMonth(), calculator.getCurrentDayOfMonth())),
+                    Double.parseDouble(accumulatedCurrentData[accumulatedCurrentData.length-1]))));
+            currentDay = calculator.getModelDay();
+            return gddProjection;
+        }
+        else{
+            return null;
+        }
     }
 
     String getFreezeData(){
@@ -251,15 +278,29 @@ class GDDDataOrganizer {
         String[] result = new String[4];
         try{
             result = dataRetriever.execute(URLs[0], URLs[1], URLs[2], URLs[3]).get();
-            fetchedData = result;
+            System.out.println(Arrays.toString(result));
+            if (!checkIfValuesAreNull(result)){
+                fetchedData = result;
+                internetIsConnected = true;
+            }
+            else{
+                internetIsConnected = false;
+            }
         }
         catch(Exception e){
             Log.d("CREATION","There was an exception in trying to get the data asynchronously.");
-        }
-        if(result[0].length() <= 2){
-            Log.d("CREATION","There is no data for the selected location");
+            return null;
         }
         return result;
+    }
+
+    private boolean checkIfValuesAreNull(String[] result){
+        for (String aResult : result) {
+            if (aResult == null) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public HashMap<String,Integer> getAllCornStages(){
