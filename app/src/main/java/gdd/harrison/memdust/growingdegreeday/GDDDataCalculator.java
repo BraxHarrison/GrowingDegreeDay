@@ -78,7 +78,7 @@ class GDDDataCalculator {
         }
 
 
-    private double calculateModelAverage(Double[] forecast, double lastDataDay) {
+    double calculateModelAverage(Double[] forecast, double lastDataDay) {
         double sum = 0;
         for (Double aForecast : forecast) {
             sum = sum + aForecast;
