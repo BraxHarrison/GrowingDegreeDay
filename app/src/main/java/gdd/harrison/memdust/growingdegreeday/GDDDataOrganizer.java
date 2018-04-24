@@ -141,8 +141,8 @@ class GDDDataOrganizer {
 
     String getCurrentLayerOfData(){
         if (internetIsConnected){
-            String[] projection = getGDDProjection().split(",");
-            String[] currentData = getCurrentTrimmedData().split(",");
+            String[] projection = trimCurrentArray(getGDDProjection().split(","));
+            String[] currentData = trimCurrentArray(getCurrentTrimmedData().split(","));
             double[] doubleProjectionAndCurrentData = new double[projection.length + currentData.length];
             System.out.println(doubleProjectionAndCurrentData.length);
             for (int i = 0; i < currentData.length; i++){

@@ -10,11 +10,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-
-/**
- * Created by dgree on 4/20/2018.
- */
-
 public class GDDDataCalculatorTests {
 
     GDDDataCalculator calculator = new GDDDataCalculator();

@@ -111,10 +111,13 @@ public class TableScreen extends AppCompatActivity{
 
     protected void getCorrectDatesForLayers(){
         GDDDataCalculator calendarCalc = new GDDDataCalculator();
+        SharedPreferences prefs = getSharedPreferences("gdd.PREFS", 0);
+        GDDDataOrganizer organizer = new GDDDataOrganizer();
+        int startingDay = calendarCalc.calculateDayNumber(organizer.calculateMonthNumber(prefs.getString("monthSpinnerVal", "January")), prefs.getInt("dayOfMonthSpinner", 1));
         String[] stages = dataArray[6].split(",");
         int[] dateIndices = findFirstIndicesOfTheNewStages(stages);
         for (int i = 0; i < dateIndices.length; i++){
-            int[] currentMonthAndDay = calendarCalc.calculateMonthAndDayGivenADay(dateIndices[i]);
+            int[] currentMonthAndDay = calendarCalc.calculateMonthAndDayGivenADay(dateIndices[i]+ startingDay);
             if (i < 5){
                 cornLayers[i] = currentMonthAndDay[0] + "/"+currentMonthAndDay[1] + "/" + calendarCalc.getCurrentYear();
             }
